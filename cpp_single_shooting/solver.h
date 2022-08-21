@@ -7,6 +7,7 @@
 #include <sstream>
 #include <tuple>
 #include <iostream>
+#include <fstream>
 
 #define NEUTRON_MASS_MEV 939.56542052
 #define PROTON_MASS_MEV 938.27208816

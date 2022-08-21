@@ -172,9 +172,18 @@ void solve_dirac()
 
 }
 
-// Dummy main during development
 int main()
 {
+	int element = 0;
+	int scenario = 1;
+
+	// File pointer
+	fstream fin;
+
+	// Open an existing file
+	fin.open("reportcard.csv", ios::in);
+
+
 	std::cout << "hi";
 	return 0;
 }
