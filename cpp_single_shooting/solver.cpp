@@ -172,16 +172,69 @@ void solve_dirac()
 
 }
 
+int read_user_input(std::string type)
+{
+	int temp;
+	std::cout << "The program requires a scenario and state. These \n";
+	std::cout << "are both integers, and the scenario ranges from 1 to 3 \n";
+	std::cout << "while the state ranges from 1 to 89. \n";
+	std::cout << "\n";
+	std::cout << "Enter " << type << ": ";
+	std::cin >> temp;
+	if (type == "scenario")
+	{
+		while (1)
+		{
+			if (std::cin.fail() || (temp < 1) || (temp > 3))
+			{
+				std::cin.clear();
+				std::cin.ignore(1000, '\n');
+				std::cout << "Invalid input, please try again. " << std::endl;
+				std::cin >> temp;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+	else
+	{
+		while (1)
+		{
+			if (std::cin.fail() || ( temp < 1) || (temp > 89) )
+			{
+				std::cin.clear();
+				std::cin.ignore(1000, '\n');
+				std::cout << "Invalid input, please try again. " << std::endl;
+				std::cin >> temp;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+	return temp;
+}
+
+std::vector<double> read_row(const string file_name, int row)
+{
+	string line;
+	fstream fin;
+	fin.open(file_name, ios::in);
+	getline(fin, line);
+
+}
+
 int main()
 {
-	int element = 0;
-	int scenario = 1;
+	int scenario = read_user_input("scenario");
+	int state = read_user_input("state");
 
-	// File pointer
-	fstream fin;
 
-	// Open an existing file
-	fin.open("reportcard.csv", ios::in);
+
+
 
 
 	std::cout << "hi";
