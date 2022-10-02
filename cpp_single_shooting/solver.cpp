@@ -1,61 +1,27 @@
 #include "solver.h"
+/* RETURN TO GAP FUNCTION LATER
+double Gap(x, y) :
+	return np.array(x - y).T
+
+*/
 /*
-std::pair <double, double> Tensor_fit(double x, double F, double G, double sigmaR, double sigmaV0, 
-	double sigmaa, double dR, double dV0, double da, double tensorV, const containers::parameters& params)
+bool test_converge(double B, double Exp)
 {
-	double Col = 0;
-
-	if (params.isospin == 1)
+	if (Exp < 0)
 	{
-		if (x > sigmaR)
+		if (B > Exp - 20 && B < 0)
 		{
-			Col = 0.0072923 * params.Z / x;
-		}
-		else
-		{
-			Col = 0.0072923 * params.Z * (3 * pow(sigmaR, 2) - pow(x, 2)) / (2 * pow(sigmaR, 3));
+			return true;
 		}
 	}
-	double sigma = sigmaV0 / (1 + exp((x - sigmaR) / sigmaa)) + Col;
-	double delta = dV0 / (1 + exp((x - dR) / da)) + Col;
-	double U = tensorV / (1 + exp((x - sigmaR) / sigmaa));
-
-	double dfgW_1 = (-params.B + sigma) * G + (params.k / x - U) * F;
-	double dfgW_2 = (2 * params.m + params.B - delta) * F + (U - params.k / x) * G;
-	return { dfgW_1, dfgW_2 };
-}
-
-std::pair <double, double> int_n_Tensor(double xstart, double xend, double iniF, double iniG,
-	double sigmaR, double sigmaV0, double sigmaa, double dR, double dV0, double da, 
-	double tensorV, const containers::parameters& params)
-{
-	double h = 0.001;
-	double step = (xend - xstart) * h;
-	double F = iniF;
-	double G = iniG;
-	double step_2 = step / 2;
-	double step_6 = step / 6;
-	int end_condition = int(1.0 / h);
-
-	double x = 0;
-
-	std::pair <double, double> v1, v2, v3, v4;
-
-	for (int i = 0; i++; i < end_condition)
+	else if (Exp > 0)
 	{
-		x = i * step + xstart;
-		v1 = Tensor_fit(x, F, G, sigmaR, sigmaV0, sigmaa, dR, dV0, da, tensorV, params);
-		v2 = Tensor_fit(x + step_2, F + v1.first * step_2, G + v1.second * step_2, 
-			sigmaR, sigmaV0, sigmaa, dR, dV0, da, tensorV, params);
-		v3 = Tensor_fit(x + step_2, F + v2.first * step_2, G + v2.second * step_2, 
-			sigmaR, sigmaV0, sigmaa, dR, dV0, da, tensorV, params);
-		v4 = Tensor_fit(x + step, F + v3.first * step, G + v3.second * step, 
-			sigmaR, sigmaV0, sigmaa, dR, dV0, da, tensorV, params);
-		F += (v1.first + 2 * v2.first + 2 * v3.first + v4.first) * step_6;
-		G += (v1.second + 2 * v2.second + 2 * v3.second + v4.second) * step_6;
+		if (B < Exp + 20 && B > 0)
+		{
+			return true;
+		}
 	}
-
-	return { F, G };
+	return false;
 }
 
 std::tuple<int, double, double> spectr(std::string state)
@@ -95,88 +61,187 @@ std::tuple<int, double, double> spectr(std::string state)
 	}
 	return { l, j, k };
 }
+*/
 
-std::tuple<double, double, double, double> BC(double xmin, double xmax, const containers::parameters& params)
+std::pair <double, double> Tensor_fit(double x, double F, double G, double tensorV, const containers::parameters& params, 
+										double B, double sigmaV0, double sigmaR, double sigmaa, double dV0, 
+										double dR, double da)
+{
+	double Col = 0;
+
+	if (params.isospin == 1)
+	{
+		if (x > sigmaR)
+		{
+			Col = 0.0072923 * params.Z / x;
+		}
+		else
+		{
+			Col = 0.0072923 * params.Z * (3 * pow(sigmaR, 2) - pow(x, 2)) / (2 * pow(sigmaR, 3));
+		}
+	}
+	
+	double sigma = sigmaV0 / (1 + exp((x - sigmaR) / sigmaa)) + Col;
+	double delta = dV0 / (1 + exp((x - dR) / da)) + Col;
+	double U = tensorV / (1 + exp((x - sigmaR) / sigmaa));
+	double dfgW_1 = (-B + sigma) * G + (params.k / x - U) * F;
+	double dfgW_2 = (2 * params.m + B - delta) * F + (U - params.k / x) * G;
+	return { dfgW_1, dfgW_2 };
+}
+
+std::pair <double, double> int_n_Tensor(double xstart, double xend, double iniF, double iniG, double tensorV, 
+										const containers::parameters& params, double B, double a0, double sigmaV0, 
+										double sigmaR, double sigmaa, double dV0, double dR, double da)
+{
+	double h = 0.001;
+	double step = (xend - xstart) * h;
+	double F = iniF;
+	double G = iniG;
+	double step_2 = step / 2;
+	double step_6 = step / 6;
+	int end_condition = int(1.0 / h);
+
+	double x = 0;
+
+	std::pair <double, double> v1, v2, v3, v4;
+
+	for (int i = 0; i++; i < end_condition)
+	{
+		x = i * step + xstart;
+		v1 = Tensor_fit(x, F, G, tensorV, params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		v2 = Tensor_fit(x + step_2, F + v1.first * step_2, G + v1.second * step_2, 
+			tensorV, params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		v3 = Tensor_fit(x + step_2, F + v2.first * step_2, G + v2.second * step_2, 
+			tensorV, params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		v4 = Tensor_fit(x + step, F + v3.first * step, G + v3.second * step, 
+			tensorV, params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		F += (v1.first + 2 * v2.first + 2 * v3.first + v4.first) * step_6;
+		G += (v1.second + 2 * v2.second + 2 * v3.second + v4.second) * step_6;
+	}
+
+	return { F, G };
+}
+
+std::tuple<double, double, double, double> BC(const containers::parameters& params, double B, double a0, double sigmaV0,
+											double sigmaR, double sigmaa, double dV0, double dR, double da)
 {
 	double Foutbc, Goutbc, miu, Finbc, Ginbc;
 	if (params.k < 0)
 	{
-		Foutbc = -params.a0 * pow(xmin, (params.l + 2)) * (-params.B + params.sigmaV0 / (1 + exp(-params.sigmaR / params.sigmaa))) / (params.l + 2 - params.k);
-		Goutbc = params.a0 * pow(xmin, (params.l + 1));
+		Foutbc = -a0 * pow(params.xmin, (params.l + 2)) * (-B + sigmaV0 / (1 + exp(-sigmaR / sigmaa))) / (params.l + 2 - params.k);
+		Goutbc = a0 * pow(params.xmin, (params.l + 1));
 	}
 	else
 	{
-		Foutbc = params.a0 * pow(xmin, params.l);
-		Goutbc = params.a0 * pow(xmin, (params.l + 1)) * (2 * params.m + params.B - params.dV0 / (1 + exp(-params.dR / params.da))) / (params.l + params.k + 1);
+		Foutbc = a0 * pow(params.xmin, params.l);
+		Goutbc = a0 * pow(params.xmin, (params.l + 1)) * (2 * params.m + B - dV0 / (1 + exp(-dR / da))) / (params.l + params.k + 1);
 
 	}
 	try
 	{
-		miu = sqrt(-2 * params.m * params.B - pow(params.B, 2));
-		Finbc = -sqrt(-params.B / (2 * params.m + params.B)) * exp(-miu * xmax);
+		miu = sqrt(-2 * params.m * B - pow(B, 2));
+		Finbc = -sqrt(-B / (2 * params.m + B)) * exp(-miu * params.xmax);
 	}
 	catch (...)
 	{
 		miu = 1e-10;
-		Finbc = -sqrt(-params.B / (1e-10)) * exp(-miu * xmax);
+		Finbc = -sqrt(-B / (1e-10)) * exp(-miu * params.xmax);
 	}
-	Ginbc = exp(-miu * xmax);
+	Ginbc = exp(-miu * params.xmax);
 
 	return { Foutbc, Goutbc, Finbc, Ginbc };
 }
 
-std::tuple<double, double, double, double> BC_pos(double xmin, double xmax, const containers::parameters& params)
+std::tuple<double, double, double, double> BC_pos(const containers::parameters& params, double B, double a0, double sigmaV0,
+											double sigmaR, double sigmaa, double dV0, double dR, double da)
 {
 	double Foutbc, Goutbc, Finbc, Ginbc;
 	if (params.k < 0)
 	{
-		Foutbc = -params.a0 * pow(xmin, (params.l + 2)) * (-params.B + params.sigmaV0 / (1 + exp(-params.sigmaR / params.sigmaa))) / (params.l + 2 - params.k);
-		Goutbc = params.a0 * pow(xmin, (params.l + 1));
-		Finbc = (std::sph_bessel(params.l, xmax) + std::sph_neumann(params.l, xmax));
-		Ginbc = sqrt(pow(params.B, 2) + 2 * params.B * params.m) / (params.B + 2 * params.m) * (std::sph_bessel(params.l + 1, xmax) + std::sph_neumann(params.l + 1, xmax));
+		Foutbc = -a0 * pow(params.xmin, (params.l + 2)) * (-B + sigmaV0 / (1 + exp(-sigmaR / sigmaa))) / (params.l + 2 - params.k);
+		Goutbc = a0 * pow(params.xmin, (params.l + 1));
+		Finbc = (std::sph_bessel(params.l, params.xmax) + std::sph_neumann(params.l, params.xmax));
+		Ginbc = sqrt(pow(B, 2) + 2 * B * params.m) / (B + 2 * params.m) * (std::sph_bessel(params.l + 1, params.xmax) + std::sph_neumann(params.l + 1, params.xmax));
 	}
 	else
 	{
-		Foutbc = params.a0 * pow(xmin, params.l);
-		Goutbc = params.a0 * pow(xmin, (params.l + 1)) * (2 * params.m + params.B - params.dV0 / (1 + exp(-params.dR / params.da))) / (params.l + params.k + 1);
-		Finbc = (std::sph_bessel(params.l, xmax) + std::sph_neumann(params.l, xmax));
-		Ginbc = sqrt(pow(params.B, 2) + 2 * params.B * params.m) / (params.B + 2 * params.m) * (std::sph_bessel(params.l - 1, xmax) + std::sph_neumann(params.l - 1, xmax));
+		Foutbc = a0 * pow(params.xmin, params.l);
+		Goutbc = a0 * pow(params.xmin, (params.l + 1)) * (2 * params.m + B - dV0 / (1 + exp(-dR / da))) / (params.l + params.k + 1);
+		Finbc = (std::sph_bessel(params.l, params.xmax) + std::sph_neumann(params.l, params.xmax));
+		Ginbc = sqrt(pow(B, 2) + 2 * B * params.m) / (B + 2 * params.m) * (std::sph_bessel(params.l - 1, params.xmax) + std::sph_neumann(params.l - 1, params.xmax));
 	}
-	double norm = sqrt(pow(std::sph_bessel(params.l, xmax), 2) + pow(std::sph_neumann(params.l, xmax), 2));
+	double norm = sqrt(pow(std::sph_bessel(params.l, params.xmax), 2) + pow(std::sph_neumann(params.l, params.xmax), 2));
 
 	return { Foutbc, Goutbc, Finbc / norm, Ginbc / norm };
 }
-*/
-/* RETURN TO GAP FUNCTION LATER
-double Gap(x, y) :
-	return np.array(x - y).T
 
-*/
-/*
-bool test_converge(double B, double Exp)
+std::pair <double, double> solve_dirac(const containers::parameters& params, double a0_in, double B0)
 {
-	if (Exp < 0)
+	// Setup potential
+	double A = params.N + params.Z;
+	double sigmaV0 = 0;
+	double dV0 = 0;
+	if (params.isospin == 1)
 	{
-		if (B > Exp - 20 && B < 0)
+		sigmaV0 = params.V0*(1 + params.kappa*(params.N-params.Z)/A);
+		if (params.scenario == 1)
 		{
-			return true;
+			dV0 = -params.lambda*sigmaV0;
+		}
+		else if (params.scenario==2)
+		{
+			dV0 = -params.lambda*params.V0*(1 - params.kappa*(params.N-params.Z)/A);
+		}
+		else if (params.scenario==3)
+		{
+			dV0 = -params.lambda*params.V0*(1 - params.kappa_so*(params.N-params.Z)/A);
 		}
 	}
-	else if (Exp > 0)
+	else if (params.isospin == -1)
 	{
-		if (B < Exp + 20 && B > 0)
+		sigmaV0 = params.V0*(1 - params.kappa*(params.N-params.Z)/A);
+		if (params.scenario==1)
 		{
-			return true;
+			dV0 = -params.lambda * sigmaV0;
 		}
+		else if (params.scenario==2)
+		{
+			dV0 = -params.lambda*params.V0*(1 + params.kappa*(params.N-params.Z)/A);
+		}
+		else if (params.scenario==3)
+		{
+			dV0 = -params.lambda*params.V0*(1 + params.kappa_so*(params.N-params.Z)/A);
+		}
+		
+		
 	}
-	return false;
+    double sigmaR = params.r0*pow(A,1/3);
+    double dR = params.Rls*pow(A,1/3);
+    double sigmaa = params.a;
+    double da = params.als;
+    double error = 100;
+	double B = B0;
+	double a0 = a0_in;
+
+	// Iterate solvers
+	int iterations = 0;
+	while (error > 0.0001)
+	{
+		double Foutbc, Goutbc, Finbc, Ginbc;
+		if(B <0)
+		{
+			std::tie(Foutbc, Goutbc, Finbc, Ginbc) = BC(params, B, a0, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		}
+		else
+		{
+			std::tie(Foutbc, Goutbc, Finbc, Ginbc) = BC_pos(params, B, a0, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		}
+		error = 0.00001;
+	}
+
+return {B, a0};
 }
 
-void solve_dirac()
-{
-
-}
-*/
 int read_user_input(std::string type)
 {
 	int temp;
@@ -272,8 +337,8 @@ int main()
 	std::cout << "are both integers, and the scenario ranges from 1 to 3 \n";
 	std::cout << "while the state ranges from 1 to 89. \n";
 	std::cout << "\n";
-	int scenario = read_user_input("scenario");
-	int state = read_user_input("state");
+	int scenario = 1;//read_user_input("scenario"); //TODO: Remove these comments. However, for debug keep.
+	int state = 1;//read_user_input("state");
 
 	// Load data from files
 	auto data = read_csv("data.csv");
@@ -302,6 +367,7 @@ int main()
 
 	// Set other parameters
 	double tensorV = 0;
+	double kappa_so = 0;
 	double m = 0;
 	if (isospin == -1)
 		m = NEUTRON_MASS_MEV;
@@ -310,12 +376,11 @@ int main()
 
 	// Create parameter struct
 	containers::parameters params(V0, kappa, lambda, r0, a, Rls, als, isospin, N, Z, l, k, xmin, xmax,
-		xmatch, m, scenario, tensorV);
+		xmatch, m, scenario, tensorV, kappa_so);
 	
-
-
-
-
-
+	// Run dirac solver
+	std::pair<double, double> result = solve_dirac(params, a0, B);  
+	double B_result = result.first, a0_result = result.second;
+	std::cout << "Converged values are B: " << B_result << ", and a0: " << a0_result;
 	return 0;
 }

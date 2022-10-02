@@ -39,11 +39,12 @@ namespace containers
         double m = 0;
         int scenario = 0;
         double tensorV = 0;
+        double kappa_so = 0;
 
         parameters(double v0, double v1, double v2, double v3, 
             double v4, double v5, double v6, double v7, double v8,
             double v9, double v10, double v11, double v12, double v13, 
-            double v14, double v15, int v16, double v17)
+            double v14, double v15, int v16, double v17, double v18)
         {
             double V0 = v0;
             double kappa = v1;
@@ -63,6 +64,7 @@ namespace containers
             double m = v15;
             int scenario = v16;
             double tensorV = v17;
+            double kappa_so = v18;
         }
 
 	} parameters;
