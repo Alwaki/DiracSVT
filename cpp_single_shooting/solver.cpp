@@ -215,10 +215,10 @@ std::pair <double, double> solve_dirac(const containers::parameters& params, dou
 		
 		
 	}
-    double sigmaR = params.r0*pow(A,1/3);
-    double dR = params.Rls*pow(A,1/3);
+    double sigmaR = params.r0*pow(A,1.0/3.0);
+    double dR = params.Rls*pow(A,1.0/3.0);
     double sigmaa = params.a;
-    double da = params.als;
+    double da = params.a;
     double error = 100;
 	double B = B0;
 	double a0 = a0_in;
@@ -375,8 +375,8 @@ int main()
 		m = PROTON_MASS_MEV;
 
 	// Create parameter struct
-	containers::parameters params(V0, kappa, lambda, r0, a, Rls, als, isospin, N, Z, l, k, xmin, xmax,
-		xmatch, m, scenario, tensorV, kappa_so);
+	containers::parameters params{V0, kappa, lambda, r0, a, Rls, als, isospin, N, Z, l, k, xmin, xmax,
+		xmatch, m, tensorV, kappa_so, scenario};
 	
 	// Run dirac solver
 	std::pair<double, double> result = solve_dirac(params, a0, B);  
