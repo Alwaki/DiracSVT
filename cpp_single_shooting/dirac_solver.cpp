@@ -1,69 +1,6 @@
 #include "solver.h"
-#include <Eigen/Core>
-
-/* RETURN TO GAP FUNCTION LATER
-double Gap(x, y) :
-	return np.array(x - y).T
-
-*/
-/*
-bool test_converge(double B, double Exp)
-{
-	if (Exp < 0)
-	{
-		if (B > Exp - 20 && B < 0)
-		{
-			return true;
-		}
-	}
-	else if (Exp > 0)
-	{
-		if (B < Exp + 20 && B > 0)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-std::tuple<int, double, double> spectr(std::string state)
-{
-	std::istringstream ss(state);
-
-	std::string word;
-	std::vector<std::string> sentence;
-	while (ss >> word)
-	{
-		sentence.push_back(word);
-	}
-
-	std::map<char, int> level_map = {
-	{ 's', 0 },
-	{ 'p', 1 },
-	{ 'd', 2 },
-	{ 'f', 3 },
-	{ 'g', 4 },
-	{ 'h', 5 },
-	{ 'i', 6 },
-	{ 'j', 7 },
-	{ 'k', 8 }
-	};
-
-	int l = level_map[sentence[1][1]];
-	double j = (double(sentence[1][2]) - 48) / 2;
-	double k;
-
-	if (j == l + 1 / 2)
-	{
-		k = -(l + 1);
-	}
-	else
-	{
-		k = l;
-	}
-	return { l, j, k };
-}
-*/
+#include "eigen3/Eigen/Core"
+#include "eigen3/Eigen/Dense"
 
 std::pair <double, double> tensorFit(double x, double F, double G, const containers::parameters& params, 
 										double B, double sigmaV0, double sigmaR, double sigmaa, double dV0, 
@@ -267,15 +204,20 @@ std::pair <double, double> solveDirac(const containers::parameters& params, doub
 		double dOutIn_1   = (outFG.first - inFG.first);
 		double dOutIn_2   = (outFG.second - inFG.second);
 
-		Eigen::Matrix2f M;
-		M <<  dGFdB_1, dGFdB_2, dGFda0_1, dGFda0_2;
-		Eigen::Vector2f Old, Cold, diff, New;
-		Old << B, a0;
-		diff << dOutIn_1, dOutIn_2;
+		Eigen::MatrixXd M(2,2);
+		M(0,0) = dGFdB_1;
+		M(0,1) = dGFda0_1;
+		M(1,0) = dGFdB_2;
+		M(1,1) = dGFda0_2;
+		Eigen::VectorXd Old(2), Cold(2), diff(2), New(2);
+		Old(0) = B;
+		Old(1) = a0;
+		diff(0) = dOutIn_1, 
+		diff(1) = dOutIn_2;
 		Cold = (M*Old)-diff;
 		New = M.completeOrthogonalDecomposition().solve(Cold);
-		B = New(1);
-		a0 = New(2);
+		B = New(0);
+		a0 = New(1);
 		error = (New-Old).norm();
 
 		iterations++;
@@ -359,15 +301,6 @@ std::vector<std::vector<double>> read_csv(std::string filename) {
 		}
 		content.push_back(row);
 	}
-	/*
-	for (int i = 0; i < content.size(); i++)
-	{
-		for (int j = 0; j < content[i].size(); j++)
-		{
-			std::cout << content[i][j] << " ";
-		}
-		std::cout << "\n";
-	} */
 
 	return content;
 }
@@ -379,8 +312,8 @@ int main()
 	std::cout << "are both integers, and the scenario ranges from 1 to 3 \n";
 	std::cout << "while the state ranges from 1 to 89. \n";
 	std::cout << "\n";
-	int scenario = 1;//read_user_input("scenario"); //TODO: Remove these comments. However, for debug keep.
-	int state = 1;//read_user_input("state");
+	int scenario = read_user_input("scenario"); 
+	int state = read_user_input("state");
 
 	// Load data from files
 	auto data = read_csv("data.csv");
