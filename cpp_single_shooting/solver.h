@@ -21,9 +21,9 @@ namespace containers
 	typedef struct parameters
 	{
     public:
-        double V0, kappa, lambda, r0, a, Rls, als, isospin, N, Z, l, k, xmin, xmax, xmatch,
+        double V0, kappa, lambda, r0, a, Rls, als, N, Z, l, k, xmin, xmax, xmatch,
                 m, tensorV, kappa_so;
-        int scenario;
+        int scenario, isospin;
 
 	} parameters;
 }
