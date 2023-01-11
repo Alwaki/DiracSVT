@@ -2,25 +2,25 @@ import scipy.special as bessel
 import numpy as np
 
 def BC(a0, xmin, xmax, l, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, m):
-    """_summary_
+    """ Calculates positive boundary condition
 
     Args:
-        a0 (_type_): _description_
-        xmin (_type_): _description_
-        xmax (_type_): _description_
-        l (_type_): _description_
-        B (_type_): _description_
-        sigmaV0 (_type_): _description_
-        sigmaR (_type_): _description_
-        sigmaa (_type_): _description_
-        dV0 (_type_): _description_
-        dR (_type_): _description_
-        da (_type_): _description_
-        k (_type_): _description_
-        m (_type_): _description_
+        a0 (float): diffusivity of nuclear surface
+        xmin (float): min range position for potential
+        xmax (float): max range position for potential
+        l (float): quantum number
+        B (float): energy
+        sigmaV0 (_type_): sigmaV0 (float): potential well depth descriptor
+        sigmaR (float): potential well depth descriptor
+        sigmaa (float): potential parameter
+        dV0 (float): potential well depth descriptor
+        dR (float): range of potential well
+        da (float): potential parameter
+        k (float): quantum number
+        m (float): mass
 
     Returns:
-        _type_: _description_
+        [float]: boundary conditions at separate ends for f and g
     """
     if k < 0:
         Foutbc = -a0*xmin**(l+2)*(-B + sigmaV0/(1+np.exp(-sigmaR/sigmaa)))/(l+2-k)
@@ -37,28 +37,27 @@ def BC(a0, xmin, xmax, l, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, m):
     Ginbc = np.exp(-miu*xmax)
     return Foutbc, Goutbc, Finbc, Ginbc
 
-def BC_positive(a0, xmin, xmax, l, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, j, m, qm = 1):
-    """_summary_
+def BC_positive(a0, xmin, xmax, l, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, j, m):
+    """ Calculates positive boundary condition
 
     Args:
-        a0 (_type_): _description_
-        xmin (_type_): _description_
-        xmax (_type_): _description_
-        l (_type_): _description_
-        B (_type_): _description_
-        sigmaV0 (_type_): _description_
-        sigmaR (_type_): _description_
-        sigmaa (_type_): _description_
-        dV0 (_type_): _description_
-        dR (_type_): _description_
-        da (_type_): _description_
-        k (_type_): _description_
-        j (_type_): _description_
-        m (_type_): _description_
-        qm (int, optional): _description_. Defaults to 1.
+        a0 (float): diffusivity of nuclear surface
+        xmin (float): min range position for potential
+        xmax (float): max range position for potential
+        l (float): quantum number
+        B (float): energy
+        sigmaV0 (_type_): sigmaV0 (float): potential well depth descriptor
+        sigmaR (float): potential well depth descriptor
+        sigmaa (float): potential parameter
+        dV0 (float): potential well depth descriptor
+        dR (float): range of potential well
+        da (float): potential parameter
+        k (float): quantum number
+        j (float): quantum number
+        m (float): mass
 
     Returns:
-        _type_: _description_
+        [float]: boundary conditions at separate ends for f and g
     """
     if k < 0:
         Foutbc = -a0*xmin**(l+2)*(-B + sigmaV0/(1+np.exp(-sigmaR/sigmaa)))/(l+2-k)
@@ -67,8 +66,8 @@ def BC_positive(a0, xmin, xmax, l, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, j
         Foutbc = a0*xmin**l
         Goutbc = a0*xmin**(l+1)*(2*m+B-dV0/(1+np.exp(-dR/da)))/(l+k+1)    
     if k < 0:
-        Finbc, Ginbc = (bessel.spherical_jn(l, xmax) + bessel.spherical_yn(l, xmax)), np.sqrt(B**2 + 2*B*m)/(B + 2*m)*(bessel.spherical_jn(l + 1, xmax) + bessel.spherical_yn(l + 1, xmax)) #*spinor_sphereharm(l, k, j, qm, B) *spinor_sphereharm(l + 1, k, j, qm, B)
+        Finbc, Ginbc = (bessel.spherical_jn(l, xmax) + bessel.spherical_yn(l, xmax)), np.sqrt(B**2 + 2*B*m)/(B + 2*m)*(bessel.spherical_jn(l + 1, xmax) + bessel.spherical_yn(l + 1, xmax)) 
     else:
-        Finbc, Ginbc = (bessel.spherical_jn(l, xmax) + bessel.spherical_yn(l, xmax)), np.sqrt(B**2 + 2*B*m)/(B + 2*m)*(bessel.spherical_jn(l - 1, xmax) + bessel.spherical_yn(l - 1, xmax)) #*spinor_sphereharm(l, k, j, qm, B) *spinor_sphereharm(l - 1, k, j, qm, B)
+        Finbc, Ginbc = (bessel.spherical_jn(l, xmax) + bessel.spherical_yn(l, xmax)), np.sqrt(B**2 + 2*B*m)/(B + 2*m)*(bessel.spherical_jn(l - 1, xmax) + bessel.spherical_yn(l - 1, xmax))
     norm = np.sqrt(np.sum(np.array([bessel.spherical_jn(l, xmax), bessel.spherical_yn(l, xmax)]))**2)
     return Foutbc, Goutbc, Finbc/norm, Ginbc/norm
