@@ -4,19 +4,17 @@
 * [Setup](#setup)
 
 ## General info
-This project is simple Lorem ipsum dolor generator.
+This repository is aimed at solving the dirac equation numerically.
 	
 ## Technologies
 Project is created with:
-* Lorem version: 12.3
-* Ipsum version: 2.33
-* Ament library version: 999
+* Python 3.7
+* Matlab R2022a
+* C++17
 	
 ## Setup
-To run this project, install it locally using npm:
+This repository contains three different versions, in separate folders.
 
-```
-$ cd ../lorem
-$ npm install
-$ npm start
-```
+## FAQ
+
+If running the python code in an environment such as VS code, note that the path to the excel files needs to be changed to an absolute path or similar.
