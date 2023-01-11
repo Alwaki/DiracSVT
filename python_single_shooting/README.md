@@ -14,4 +14,6 @@ Note that it might be necessary to use pip3, depending on your python environmen
 
 ## Running
 
-Generally, the only file one should need to interact with to run the code is the main.py file. From here one can change which states to calculate for.
+Generally, the only file one should need to interact with to run the code is the main.py file. In the file one can select which state to investigate, and then run by
+
+    python main.py
