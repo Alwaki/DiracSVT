@@ -1,4 +1,3 @@
-
 import numpy as np
 import sys
 import time
@@ -17,14 +16,17 @@ def getsign(p):
         return -1
 
 
-state = ['16O 1p1/2', -1]
+
+
+state = ['208Pb 3p1/2', -1]
 
 data = DiracData.data
 p1 = DiracData.p1
 p = {'V0': p1['V0'], 'r0': p1['r0'], 'Rls': p1['Rls']}
 pnames = list(p1.keys())
 pfixed = {pnames[pnames.index(x)]:p1[x] for x in pnames if x not in list(p.keys())}
-
-B, a0 = run_1Dsolve(list(p1.values()), state, {}, p1, Scenario = 1)
-print(B, a0)
+for i in range(11):
+    state = [data['Name'][78+i], 1]
+    B, a0 = run_1Dsolve(list(p1.values()), state, {}, p1, Scenario = 1)
+    print(B)
     

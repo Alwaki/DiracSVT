@@ -7,7 +7,6 @@ from datetime import date
 from datetime import datetime
 import gvar as gv
 from numpy.lib.scimath import sqrt as csqrt
-from plotfunctions import *
 import copy
 import DiracData
 
