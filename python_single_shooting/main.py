@@ -14,7 +14,7 @@ from util import *
 from shooting_method import *
 
 # Set state according to datasheet
-state = ['132Sn 2f7/2', -1]
+state = ['16O 1p1/2', -1]
 
 # Solver is run
 B, a0 = run_1Dsolve(state, Scenario=1)
