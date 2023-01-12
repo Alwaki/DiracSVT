@@ -1,3 +1,15 @@
+"""
+Project:        Shell evolution of the dirac equation with 
+                tensor potential
+                
+Authors:        Alexander W. Kiessling & Daniel Karlsson 
+                (2021-2023)
+
+Description:    Boundary conditions for the radial dirac 
+                equation.
+
+"""
+
 import scipy.special as bessel
 import numpy as np
 

@@ -1,3 +1,15 @@
+"""
+Project:        Shell evolution of the dirac equation with 
+                tensor potential
+                
+Authors:        Alexander W. Kiessling & Daniel Karlsson 
+                (2021-2023)
+
+Description:    Functionality for shooting method solver,
+                this is the main looping point to call solving methods
+                and handle results.
+"""
+
 from util import *
 from numerical_solver import *
 from boundary_conditions import *
@@ -96,7 +108,7 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
     dR = r0ls*A**(1/3)
     sigmaa = a
     da = als
-    
+
     error = 1
     iterations = 0
     while error > 0.0001:

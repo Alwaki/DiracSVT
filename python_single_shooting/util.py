@@ -1,3 +1,15 @@
+"""
+Project:        Shell evolution of the dirac equation with 
+                tensor potential
+                
+Authors:        Alexander W. Kiessling & Daniel Karlsson 
+                (2021-2023)
+
+Description:    Utility functions for data loading and 
+                less clearly defined tools.
+
+"""
+
 import re, os, sys, copy
 import pandas as pd
 import numpy as np

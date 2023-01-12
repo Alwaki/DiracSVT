@@ -1,8 +1,22 @@
+"""
+Project:        Shell evolution of the dirac equation with 
+                tensor potential
+                
+Authors:        Alexander W. Kiessling & Daniel Karlsson 
+                (2021-2023)
+
+Description:    Numerical methods to solve initial value problem through
+                integration. Methods are decorated with jit handle,
+                which reduces debug value. Remove jit decorator
+                in case of debug.
+"""
+
 from numba import jit
 import numpy as np
 
 @jit(nopython = True)
-def point_solver(x, FG, k, m, B, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, isospin):
+def point_solver(x, FG, k, m, B, sigmaV0, dV0, sigmaR, dR,
+                 sigmaa, da, Z, tensorV, isospin):
     """ Calculation of slope and potentials at point x
 
     Args:
@@ -32,15 +46,16 @@ def point_solver(x, FG, k, m, B, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensor
             Col = 0.0072923*Z*(3*sigmaR**2 - x**2)/(2*sigmaR**3)
     else:
         Col = 0
-    sigma = sigmaV0/(1+np.exp((x-sigmaR)/sigmaa)) + Col                                     # vector potential + scalar potential
-    delta = dV0/(1+np.exp((x-dR)/da)) + Col                                                 # vector potential - scalar potential
-    U = tensorV/(1+np.exp((x-sigmaR)/sigmaa))                                               # tensor potential
+    sigma = sigmaV0/(1+np.exp((x-sigmaR)/sigmaa)) + Col                 # vector potential + scalar potential
+    delta = dV0/(1+np.exp((x-dR)/da)) + Col                             # vector potential - scalar potential
+    U = tensorV/(1+np.exp((x-sigmaR)/sigmaa))                           # tensor potential
     dfgW[1] = (2*m + B-delta)*FG[0]+(U-k/x)*FG[1]
     dfgW[0] = (-B + sigma)*FG[1]+(k/x-U)*FG[0]
     return dfgW
 
 @jit(nopython = True)
-def RK_integrate(xstart, xend, iniF, iniG, k, m, B, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, isospin):
+def RK_integrate(xstart, xend, iniF, iniG, k, m, B, sigmaV0, dV0,
+                 sigmaR, dR, sigmaa, da, Z, tensorV, isospin):
     """ Runge-Kutta integration
 
     Args:
@@ -76,10 +91,17 @@ def RK_integrate(xstart, xend, iniF, iniG, k, m, B, sigmaV0, dV0, sigmaR, dR, si
     outputFG[1] = iniG
     for i in range(1, int(1/h) + 1):
         x = (i-1)*step+xstart
-        k1 = point_solver(x, outputFG, k, m, B, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, isospin)
-        k2 = point_solver(x + step/2, outputFG + k1*step/2, k, m, B, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, isospin)
-        k3 = point_solver(x + step/2, outputFG + k2*step/2, k, m, B, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, isospin)
-        k4 = point_solver(x + step, outputFG + k3*step, k, m, B, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, isospin)
+        k1 = point_solver(x, outputFG, k, m, B, sigmaV0, dV0, sigmaR,
+                          dR, sigmaa, da, Z, tensorV, isospin)
+        k2 = point_solver(x + step/2, outputFG + k1*step/2, k, m, B,
+                          sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z,
+                          tensorV, isospin)
+        k3 = point_solver(x + step/2, outputFG + k2*step/2, k, m, B,
+                          sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z,
+                          tensorV, isospin)
+        k4 = point_solver(x + step, outputFG + k3*step, k, m, B,
+                          sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z,
+                          tensorV, isospin)
         outputFG += (k1 + 2*k2 + 2*k3 + k4)*step/6
         rvals[i - 1] = x
         FGvals[0][i - 1] = outputFG[0][0]
