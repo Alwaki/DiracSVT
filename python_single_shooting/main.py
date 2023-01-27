@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Project:        Shell evolution of the dirac equation with 
-                tensor potential
+Project:        Shell evolution of the dirac equation
                 
 Authors:        Alexander W. Kiessling & Daniel Karlsson 
                 (2021-2023)
