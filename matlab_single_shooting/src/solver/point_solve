@@ -1,7 +1,7 @@
 % DESCRIPTION: Dirac tensor equation. Adds Coulomb forces 
 % due to charge if the nucleon is a proton.
 
-function dFGW = Tensor_fit(x, FG, k, m, B, sigmaV0, deltaV0, ...
+function dFGW = point_solve(x, FG, k, m, B, sigmaV0, deltaV0, ...
     sigmaR, deltaR, sigmaa, deltaa, tensorV, isospin, Z)
 
 % Add charge potential

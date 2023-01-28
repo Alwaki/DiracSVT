@@ -1,9 +1,9 @@
 % DESCRIPTION: Main solver which loops RK4 routine until convergence or
 % divergence of solution.
 
-function [B, a0] = dirac_solver(p, B, a0, k_so, tensorV)
+function [B, a0, rvals, FGvals] = dirac_solver(p, B, a0, k_so, tensorV)
 
-Gap = @(x,y) (x-y);    %% define gap function, difference between variables
+Gap = @(x,y) (x-y);    %% define gap function to retain similarity of codes
 
 % Determine mass and potentials
 A = p.N + p.Z;
@@ -57,11 +57,14 @@ while (error > convergence_threshold) && abs(B) < 100 && iterations < 200
                                             sigmaa, m);
     end
 
-    inFG = Integrate_Tensor(p.xmax, p.xmatch, Finbc, Ginbc, p.k, m, ...
+    [inFG, rvals, FGvals] = Integrate_RK4(p.xmax, p.xmatch, Finbc, Ginbc, p.k, m, ...
     B, sigmaV0, deltaV0, sigmaR, deltaR, sigmaa, deltaa, tensorV, p.isospin, p.Z);
 
-    outFG = Integrate_Tensor(p.xmin, p.xmatch, Foutbc, Goutbc, p.k, m, ...
+    [outFG, outrvals, outFGvals] = Integrate_RK4(p.xmin, p.xmatch, Foutbc, Goutbc, p.k, m, ...
     B, sigmaV0, deltaV0, sigmaR, deltaR, sigmaa, deltaa, tensorV, p.isospin, p.Z);
+
+    rvals = [rvals; outrvals];
+    FGvals = [FGvals; outFGvals];
     
     % Boundary conditions at infinity point
     B1 = B + B*h;
@@ -75,10 +78,10 @@ while (error > convergence_threshold) && abs(B) < 100 && iterations < 200
                                             sigmaa, m);
     end
 
-    dBinFG = Integrate_Tensor(p.xmax, p.xmatch, Finbc, Ginbc, p.k, m, ...
+    dBinFG = Integrate_RK4(p.xmax, p.xmatch, Finbc, Ginbc, p.k, m, ...
     B1, sigmaV0, deltaV0, sigmaR, deltaR, sigmaa, deltaa, tensorV, p.isospin, p.Z);
 
-    dBoutFG = Integrate_Tensor(p.xmin, p.xmatch, Foutbc, Goutbc, p.k, m, ...
+    dBoutFG = Integrate_RK4(p.xmin, p.xmatch, Foutbc, Goutbc, p.k, m, ...
     B1, sigmaV0, deltaV0, sigmaR, deltaR, sigmaa, deltaa, tensorV, p.isospin, p.Z);
     
     dGFdB    = (Gap(dBoutFG, dBinFG) - Gap(outFG, inFG)) / (B*h);
