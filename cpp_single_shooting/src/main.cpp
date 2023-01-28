@@ -50,8 +50,13 @@ int main()
 		xmatch, m, tensorV, kappa_so, scenario, isospin};
 	
 	// Run dirac solver
-	std::pair<double, double> result = solveDirac(params, a0, B);  
-	double B_result = result.first, a0_result = result.second;
+	containers::solutionsBa0 result = solveDirac(params, a0, B);  
+	
+	// print and plot results
+	double B_result = result.B, a0_result = result.a0;
 	std::cout << "Converged values are B: " << B_result << ", and a0: " << a0_result;
+	plotWF(result.rvals, result.fvals, result.gvals);
+	
+	
 	return 0;
 }

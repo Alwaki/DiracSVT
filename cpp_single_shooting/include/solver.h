@@ -1,7 +1,8 @@
-#pragma once
+#ifndef SOLVER
+#define SOLVER
 
-#include "eigen3/Eigen/Core"
-#include "eigen3/Eigen/Dense"
+#include <eigen3/Eigen/Core>
+#include <eigen3/Eigen/Dense>
 #include <cmath>
 #include <vector>
 #include <string>
@@ -13,7 +14,6 @@
 #include <limits>
 #include <utility> // std::pair
 #include <stdexcept> // std::runtime_error
-
 
 #define NEUTRON_MASS_MEV 939.56542052
 #define PROTON_MASS_MEV 938.27208816
@@ -28,9 +28,28 @@ namespace containers
         int scenario, isospin;
 
 	} parameters;
+
+	typedef struct solutionsFG
+	{
+		public: 
+			std::pair <double, double> FG;
+			std::vector<double> rvals;
+			std::vector<double> fvals;
+			std::vector<double> gvals;
+	} solutionsFG;
+
+	typedef struct solutionsBa0
+	{
+		public: 
+			double B;
+			double a0;
+			std::vector<double> rvals;
+			std::vector<double> fvals;
+			std::vector<double> gvals;
+	} solutionsBa0;
 }
 
-std::pair <double, double> tensorFit(double x, double F, double G, const containers::parameters& params, 
+std::pair <double, double> pointSolve(double x, double F, double G, const containers::parameters& params, 
 										double B, double sigmaV0, double sigmaR, double sigmaa, double dV0, 
 										double dR, double da)
 {
@@ -56,7 +75,7 @@ std::pair <double, double> tensorFit(double x, double F, double G, const contain
 	return { dfgW_1, dfgW_2 };
 }
 
-std::pair <double, double> integrateTensor(double iniF, double iniG, const containers::parameters& params, 
+std::pair <double, double> IntegrateRK4(double iniF, double iniG, const containers::parameters& params, 
 											double B, double a0, double sigmaV0, double sigmaR, double sigmaa, 
 											double dV0, double dR, double da, double xend, double xstart)
 {
@@ -75,18 +94,61 @@ std::pair <double, double> integrateTensor(double iniF, double iniG, const conta
 	for (int i = 0; i < end_condition; i++)
 	{
 		x = i * step + xstart;
-		v1 = tensorFit(x, F, G, params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
-		v2 = tensorFit(x + step_2, F + v1.first * step_2, G + v1.second * step_2, 
+		v1 = pointSolve(x, F, G, params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		v2 = pointSolve(x + step_2, F + v1.first * step_2, G + v1.second * step_2, 
 			 params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
-		v3 = tensorFit(x + step_2, F + v2.first * step_2, G + v2.second * step_2, 
+		v3 = pointSolve(x + step_2, F + v2.first * step_2, G + v2.second * step_2, 
 			 params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
-		v4 = tensorFit(x + step, F + v3.first * step, G + v3.second * step, 
+		v4 = pointSolve(x + step, F + v3.first * step, G + v3.second * step, 
 			params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
 		F += (v1.first + 2 * v2.first + 2 * v3.first + v4.first) * step_6;
 		G += (v1.second + 2 * v2.second + 2 * v3.second + v4.second) * step_6;
 	}
 
 	return { F, G };
+}
+
+containers::solutionsFG IntegrateRK4_withInfo(double iniF, double iniG, const containers::parameters& params, 
+											double B, double a0, double sigmaV0, double sigmaR, double sigmaa, 
+											double dV0, double dR, double da, double xend, double xstart)
+{
+	containers::solutionsFG solution;
+	
+	double h = 0.001;
+	double step = (xend - xstart) * h;
+	double F = iniF;
+	double G = iniG;
+	double step_2 = step / 2;
+	double step_6 = step / 6;
+	int end_condition = int(1.0 / h);
+
+	std::vector<double> rvals;
+	std::vector<double> fvals;
+	std::vector<double> gvals;
+
+	double x = 0;
+
+	std::pair <double, double> v1, v2, v3, v4;
+
+	for (int i = 0; i < end_condition; i++)
+	{
+		x = i * step + xstart;
+		v1 = pointSolve(x, F, G, params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		v2 = pointSolve(x + step_2, F + v1.first * step_2, G + v1.second * step_2, 
+			 params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		v3 = pointSolve(x + step_2, F + v2.first * step_2, G + v2.second * step_2, 
+			 params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		v4 = pointSolve(x + step, F + v3.first * step, G + v3.second * step, 
+			params, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
+		F += (v1.first + 2 * v2.first + 2 * v3.first + v4.first) * step_6;
+		G += (v1.second + 2 * v2.second + 2 * v3.second + v4.second) * step_6;
+		solution.rvals.push_back(x);
+		solution.fvals.push_back(F);
+		solution.gvals.push_back(G);
+	}
+	solution.FG = { F, G };
+
+	return solution;
 }
 
 std::tuple<double, double, double, double> BC(const containers::parameters& params, double B, double a0, double sigmaV0,
@@ -142,7 +204,7 @@ std::tuple<double, double, double, double> BC_pos(const containers::parameters& 
 	return { Foutbc, Goutbc, Finbc / norm, Ginbc / norm };
 }
 
-std::pair <double, double> solveDirac(const containers::parameters& params, double a0_in, double B0)
+containers::solutionsBa0 solveDirac(const containers::parameters& params, double a0_in, double B0)
 {
 	// Setup potential
 	double A = params.N + params.Z;
@@ -190,6 +252,11 @@ std::pair <double, double> solveDirac(const containers::parameters& params, doub
 	double B = B0;
 	double a0 = a0_in;
 
+	// Setup solution container structs
+	containers::solutionsFG inSol;
+	containers::solutionsFG outSol;
+	containers::solutionsBa0 convergedSol;
+
 	// Iterate solvers
 	double h = 0.0001;
 	int iterations = 0;
@@ -204,12 +271,15 @@ std::pair <double, double> solveDirac(const containers::parameters& params, doub
 		{
 			std::tie(Foutbc, Goutbc, Finbc, Ginbc) = BC_pos(params, B, a0, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
 		}
-		std::pair <double, double> inFG = integrateTensor(Finbc, Ginbc, params, B, a0, sigmaV0, 
+		inSol = IntegrateRK4_withInfo(Finbc, Ginbc, params, B, a0, sigmaV0, 
 										sigmaR, sigmaa, dV0, dR, da, params.xmatch, params.xmax);
-        std::pair <double, double> outFG = integrateTensor(Foutbc, Goutbc, params, B, a0, sigmaV0, 
+        outSol = IntegrateRK4_withInfo(Foutbc, Goutbc, params, B, a0, sigmaV0, 
 										sigmaR, sigmaa, dV0, dR, da, params.xmatch, params.xmin);
 		double B1 = B + B*h;
 		
+		std::pair <double, double> inFG = inSol.FG;
+		std::pair <double, double> outFG = outSol.FG;
+
 		if(B1 < 0)
 		{
 			std::tie(Foutbc, Goutbc, Finbc, Ginbc) = BC(params, B1, a0, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
@@ -218,9 +288,9 @@ std::pair <double, double> solveDirac(const containers::parameters& params, doub
 		{
 			std::tie(Foutbc, Goutbc, Finbc, Ginbc) = BC_pos(params, B1, a0, sigmaV0, sigmaR, sigmaa, dV0, dR, da);
 		}
-		std::pair <double, double> dBinFG = integrateTensor(Finbc, Ginbc, params, B1, a0, sigmaV0, 
+		std::pair <double, double> dBinFG = IntegrateRK4(Finbc, Ginbc, params, B1, a0, sigmaV0, 
 										sigmaR, sigmaa, dV0, dR, da, params.xmatch, params.xmax);
-        std::pair <double, double> dBoutFG = integrateTensor(Foutbc, Goutbc, params, B1, a0, sigmaV0, 
+        std::pair <double, double> dBoutFG = IntegrateRK4(Foutbc, Goutbc, params, B1, a0, sigmaV0, 
 										sigmaR, sigmaa, dV0, dR, da, params.xmatch, params.xmin);
 										
 		double dGFdB_1    = ((dBoutFG.first - dBinFG.first) - (outFG.first - inFG.first))/(B*h);
@@ -250,7 +320,24 @@ std::pair <double, double> solveDirac(const containers::parameters& params, doub
 
 		iterations++;
 	}
+convergedSol.B = B;
+convergedSol.a0 = a0;
 
-return {B, a0};
+for(size_t i = 0; i < outSol.rvals.size(); i++)
+{
+	convergedSol.rvals.push_back(outSol.rvals[i]);
+	convergedSol.fvals.push_back(outSol.fvals[i]);
+	convergedSol.gvals.push_back(outSol.gvals[i]);
 }
 
+for(size_t i = 0; i < inSol.rvals.size(); i++)
+{
+	convergedSol.rvals.push_back(inSol.rvals[inSol.rvals.size()-i]);
+	convergedSol.fvals.push_back(inSol.fvals[inSol.rvals.size()-i]);
+	convergedSol.gvals.push_back(inSol.gvals[inSol.rvals.size()-i]);
+}
+
+return convergedSol;
+}
+
+#endif

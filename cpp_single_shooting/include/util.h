@@ -1,5 +1,21 @@
-#pragma once
-#include "solver.h"
+#ifndef UTIL
+#define UTIL
+
+#include "pbPlots.cpp" // Override linker for quick fix compatibility between platforms when compiling
+#include "supportLib.cpp"
+#include "matplotlibcpp.h"
+#include <cmath>
+#include <vector>
+#include <string>
+#include <map>
+#include <sstream>
+#include <tuple>
+#include <iostream>
+#include <fstream>
+#include <limits>
+#include <utility>
+
+namespace plt = matplotlibcpp;
 
 
 int read_user_input(std::string type)
@@ -80,3 +96,24 @@ std::vector<std::vector<double>> read_csv(std::string filename) {
 
 	return content;
 }
+
+bool plotWF(std::vector<double> rvals, std::vector<double> fvals, std::vector<double> gvals)
+{
+	plt::figure();
+	plt::plot(rvals, fvals, "b");
+	plt::plot(rvals, gvals, "r");
+	plt::show();
+	/*
+	RGBABitmapImageReference *imageReference = CreateRGBABitmapImageReference();
+	StringReference *errorMessage = CreateStringReferenceLengthValue(0, L' ');
+
+	DrawScatterPlot(imageReference, 600, 400, &rvals, &fvals, errorMessage);
+	DrawScatterPlot(imageReference, 600, 400, &rvals, &gvals, errorMessage);
+	vector<double> *pngdata = ConvertToPNG(imageReference->image);
+	WriteToFile(pngdata, "plotWF.png");
+	DeleteImage(imageReference->image);
+	FreeAllocations();
+	*/
+}
+
+#endif
