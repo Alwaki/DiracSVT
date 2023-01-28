@@ -32,7 +32,7 @@ run("setup");
 sprintf("B: %f, a0: %f", B, a0)
 
 % Plot wavefunction
-plot(rvals, FGvals(1, :), rvals, FGvals(2,:))
+plotWF(rvals, FGvals)
 
     
 

@@ -63,8 +63,8 @@ while (error > convergence_threshold) && abs(B) < 100 && iterations < 200
     [outFG, outrvals, outFGvals] = Integrate_RK4(p.xmin, p.xmatch, Foutbc, Goutbc, p.k, m, ...
     B, sigmaV0, deltaV0, sigmaR, deltaR, sigmaa, deltaa, tensorV, p.isospin, p.Z);
 
-    rvals = [rvals; outrvals];
-    FGvals = [FGvals; outFGvals];
+    rvals = [outrvals flip(rvals)];
+    FGvals = [outFGvals flip(FGvals,2)];
     
     % Boundary conditions at infinity point
     B1 = B + B*h;

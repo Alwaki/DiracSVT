@@ -11,8 +11,8 @@ h=0.001;
 step=(xend-xstart)*h;
 
 % Storage (radius and wave function)
-rvals = np.zeros(len(range(1, int(1/h) + 1)))
-FGvals = np.zeros((2, len(range(1, int(1/h) + 1))))
+rvals = zeros(1, 1/h);
+FGvals = zeros(2, 1/h);
 
 % RK4 Loop
 for i = 1:1:1/h
@@ -28,9 +28,9 @@ for i = 1:1:1/h
     outputFG = outputFG + (k1 + 2*k2 + 2*k3 + k4) * step/6;
     
     % Store for plotting
-    rvals[i - 1] = x
-    FGvals[0][i - 1] = outputFG[0][0]
-    FGvals[1][i - 1] = outputFG[1][0]
+    rvals(i) = x;
+    FGvals(1, i) = outputFG(1);
+    FGvals(2, i) = outputFG(2);
 end
 
 
