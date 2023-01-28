@@ -14,6 +14,7 @@ import pandas as pd
 import numpy as np
 import math
 import scipy.constants as constants
+import matplotlib.pyplot as plt
 
 def spectr(state):
     """ Extracts the relevant quantum numbers of the given state
@@ -84,3 +85,21 @@ def test_converge(B, Exp):
         bool: convergence status
     """
     return math.isclose(B, Exp, rel_tol=0.1)
+
+def plotWF(rvals, FGvals, state):
+    """ Plots wavefunction
+
+    Args:
+        rvals ([float]): radial component
+        FGvals ([float]): split wavefunction (two component solution)
+        state ([tuple]): tuple containing string and integer. String is used as title.
+    """
+    x, y = zip(*sorted(zip(rvals,FGvals[0])))
+    plt.plot(x, y, c = 'r', label = 'f')
+    x, y = zip(*sorted(zip(rvals,FGvals[1])))
+    plt.plot(x, y, c = 'b', label = 'g')
+    plt.legend()
+    plt.title(state[0])
+    plt.xlabel('r')
+    plt.ylabel('Wavefunction')
+    plt.show()

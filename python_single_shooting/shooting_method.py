@@ -34,14 +34,14 @@ def run_1Dsolve(state, Scenario = 1):
 
     for b in range(0,20):
         B0 = exp + b*np.random.randn()/10
-        B, a0 = solve_dirac(p, pfix, pdict, data, mn, mp, state = state, t = t, B0 = B0, Scenario = Scenario, samea = True)    
+        B, a0, rvals, FGvals  = solve_dirac(p, pfix, pdict, data, mn, mp, state = state, t = t, B0 = B0, Scenario = Scenario, samea = True)    
         if test_converge(B, exp):
             break
         if abs(B) >= 100:
             B = -100
             a = 0
             break    
-    return B, a0
+    return B, a0, rvals, FGvals
 
 def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N= False, Z = False, B0 = False, tensorV = 0.0, Scenario = False, samea = False):
     """ Runs an iteration of solving the dirac equation
@@ -107,7 +107,7 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
     dR = r0ls*A**(1/3)
     sigmaa = a
     da = als
-
+    
     error = 1
     iterations = 0
     while error > 0.0001:
@@ -157,4 +157,4 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
         if B < -100 or B > 100:
             error = 0
             return -100, a0
-    return B, a0
+    return B, a0, rvals, FGvals
