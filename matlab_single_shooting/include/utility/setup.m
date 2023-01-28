@@ -5,9 +5,9 @@
 % allocating space for data structures.
 
 % Add folder structure pathing
-addpath("src\")
-addpath("src\solver")
-addpath("src\utility")
+addpath("include\")
+addpath("include\solver")
+addpath("include\utility")
 addpath("files\")
 
 % Load data from file

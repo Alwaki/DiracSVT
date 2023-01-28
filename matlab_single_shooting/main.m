@@ -20,7 +20,7 @@ scenario = 1;
 element_state_index = 1;
 
 % Setup acts to set paths, load data, declare variables and enact user settings.
-addpath("src\utility\");
+addpath("include\utility\");
 run("setup");
 
 %% CODE
