@@ -1,16 +1,14 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "CXX"
   )
-# The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/alwaki/Documents/code/Shooting_Dirac/cpp_single_shooting/src/main.cpp" "/home/alwaki/Documents/code/Shooting_Dirac/cpp_single_shooting/build/CMakeFiles/dirac_shooting.dir/src/main.cpp.o"
-  )
-set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The include file search paths:
-set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "../include"
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/alwaki/Documents/code/Shooting_Dirac/cpp_single_shooting/main.cpp" "CMakeFiles/dirac_shooting.dir/main.cpp.o" "gcc" "CMakeFiles/dirac_shooting.dir/main.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -1,1 +1,1 @@
-/usr/bin/c++     CMakeFiles/dirac_shooting.dir/src/main.cpp.o  -o dirac_shooting 
+/usr/bin/c++ CMakeFiles/dirac_shooting.dir/main.cpp.o -o dirac_shooting 

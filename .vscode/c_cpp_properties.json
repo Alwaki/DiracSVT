@@ -5,14 +5,14 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/cpp_single_shooting",
-                "/usr/include/python3.6m",
-                "/usr/include/python2.7"
+                "/usr/include/python3.6m"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
             "intelliSenseMode": "linux-gcc-x64",
-            "cppStandard": "c++17"
+            "cppStandard": "c++17",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

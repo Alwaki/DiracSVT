@@ -1,7 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/dirac_shooting.dir/src/main.cpp.o"
-  "dirac_shooting.pdb"
+  "CMakeFiles/dirac_shooting.dir/main.cpp.o"
+  "CMakeFiles/dirac_shooting.dir/main.cpp.o.d"
   "dirac_shooting"
+  "dirac_shooting.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

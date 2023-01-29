@@ -1,6 +1,18 @@
 #include "solver.h"
 #include "util.h"
 
+#include <cmath>
+#include <vector>
+#include <string>
+#include <map>
+#include <sstream>
+#include <tuple>
+#include <iostream>
+#include <fstream>
+#include <limits>
+#include <utility> // std::pair
+#include <stdexcept> // std::runtime_error
+
 int main()
 {
 	// Allow user to select scenario and state

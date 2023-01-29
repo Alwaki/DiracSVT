@@ -60,5 +60,6 @@
         "typeinfo": "cpp",
         "numeric": "cpp",
         "dense": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/cpp_single_shooting"
 }
