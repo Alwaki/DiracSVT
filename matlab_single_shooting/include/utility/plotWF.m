@@ -6,4 +6,5 @@ plot(rvals, FGvals(2,:), 'b')
 ylabel("Wavefunction")
 xlabel("r")
 legend("f", "g")
+title("Matlab plot")
 end
