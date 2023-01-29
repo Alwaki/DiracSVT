@@ -4,7 +4,7 @@
 * [Setup](#setup)
 
 ## General info
-This repository is aimed at solving the dirac equation numerically.
+This repository is aimed at solving the dirac equation numerically, using the shooting method. The repository contains three different solvers, written in different coding languages but with almost the same functionality. 
 	
 ## Technologies
 Project is created with:
@@ -13,8 +13,4 @@ Project is created with:
 * C++17
 	
 ## Setup
-This repository contains three different versions, in separate folders.
-
-## FAQ
-
-If running the python code in an environment such as VS code, note that the path to the excel files needs to be changed to an absolute path or similar.
+Each folder contains a separate readme file with instructions for what depdencies are required, and running the code. Note that each shooting directory is a standalone package, and can be used separately. 
