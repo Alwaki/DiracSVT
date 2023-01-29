@@ -17,5 +17,7 @@ state = ['16O 1p1/2', -1]
 
 # Solver is run
 B, a0, rvals, FGvals = run_1Dsolve(state, Scenario=1)
+
+# Print out results and plot wavefunction
 print("B: ", B, " a0: ", a0)
 plotWF(rvals, FGvals, state)
