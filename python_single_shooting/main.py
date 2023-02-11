@@ -25,6 +25,8 @@ for i, x in enumerate(t):
     B, a0, rvals, FGvals = run_1Dsolve(state, Scenario=2)
     print(B)
 
+
+#this is a change
 # Print out results and plot wavefunction
 #print("B: ", B, " a0: ", a0)
 #plotWF(rvals, FGvals, state)
