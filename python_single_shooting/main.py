@@ -16,7 +16,7 @@ from shooting_method import *
 state = ['16O 1p1/2', -1]
 
 # Solver is run
-B, a0, rvals, FGvals = run_1Dsolve(state, Scenario=1)
+B, a0, rvals, FGvals = run_1Dsolve(state, Scenario=2)
 
 # Print out results and plot wavefunction
 print("B: ", B, " a0: ", a0)

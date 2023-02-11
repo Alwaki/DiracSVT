@@ -13,7 +13,7 @@ from util import *
 from numerical_solver import *
 from boundary_conditions import *
 
-def run_1Dsolve(state, Scenario = 1):
+def run_1Dsolve(state, Scenario):
     """ Run entire solver routine to generate binding energy solutions. This will call
     dirac solver until convergence/termination.
 
@@ -25,9 +25,18 @@ def run_1Dsolve(state, Scenario = 1):
         [float]: solutions in the form of B and a0
     """
     data, p1, p2, p3, mn, mp = load_data("data.xlsx", "parameters.xlsx")
-    pfix = p1
+    
+    if Scenario == 1:
+        pfix = p1
+        p = list(p1.values())
+    if Scenario == 2:
+        pfix = p2
+        p = list(p2.values())
+    if Scenario == 3:
+        pfix = p3
+        p = list(p3.values())
+        
     pdict = {}
-    p = list(p1.values())
     state, t = state[0], state[1]
     pctrange = np.array(sorted(np.arange(-40, 41, 4), key = abs))/1000
     exp = data[(data.Name == state) & (data.t == t)].Experiment.values[0]
