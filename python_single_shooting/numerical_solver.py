@@ -1,7 +1,7 @@
 """
 Project:        Shell evolution of the dirac equation 
                 
-Authors:        Alexander W. Kiessling & Daniel Karlsson 
+Authors:        Daniel Karlsson & Alexander Kiessling
                 (2021-2023)
 
 Description:    Numerical methods to solve initial value problem through

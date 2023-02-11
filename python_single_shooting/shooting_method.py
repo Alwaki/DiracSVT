@@ -1,7 +1,7 @@
 """
 Project:        Shell evolution of the dirac equation
                 
-Authors:        Alexander W. Kiessling & Daniel Karlsson 
+Authors:        Daniel Karlsson & Alexander Kiessling
                 (2021-2023)
 
 Description:    Functionality for shooting method solver,
@@ -124,7 +124,7 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
         if B < 0:
             Foutbc, Goutbc, Finbc, Ginbc = BC(a0, xmin, xmax, l, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, m) #Set boundary conditions for B
         else:
-            Foutbc, Goutbc, Finbc, Ginbc = BC_positive(a0, xmin, xmax, l, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, j, m, qm = 0) #Set boundary conditions for B positive
+            Foutbc, Goutbc, Finbc, Ginbc = BC_positive(a0, xmin, xmax, l, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, j, m) #Set boundary conditions for B positive
         inFG, rvals, FGvals = RK_integrate(xmax, xmatch, Finbc, Ginbc, k, m, B, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, t)
         outFG, rvalsout, FGvalsout = RK_integrate(xmin, xmatch, Foutbc, Goutbc, k, m, B, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, t)
         rvals = np.concatenate((rvals, rvalsout), axis = None)
@@ -133,7 +133,7 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
         if B1 < 0:
             Foutbc, Goutbc, Finbc, Ginbc = BC(a0, xmin, xmax, l, B1, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, m) #Set boundary conditions for B+h
         else:
-            Foutbc, Goutbc, Finbc, Ginbc = BC_positive(a0, xmin, xmax, l, B1, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, j, m, qm = 0) #Set boundary conditions for B positive
+            Foutbc, Goutbc, Finbc, Ginbc = BC_positive(a0, xmin, xmax, l, B1, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, j, m) #Set boundary conditions for B positive
         dBinFG, drvals, dFGvals = RK_integrate(xmax, xmatch, Finbc, Ginbc, k, m, B1, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, t)
         dBoutFG, drvals, dFGvals = RK_integrate(xmin, xmatch, Foutbc, Goutbc, k, m, B1, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, t)
 
