@@ -13,20 +13,11 @@ from util import *
 from shooting_method import *
 
 # Set state according to datasheet
-#state = ['16O 1p1/2', -1]
-d = pd.read_excel(os.getcwd()+"\\python_single_shooting\\"+"data.xlsx")
-s = d["Name"].values
-t = d["t"].values
-for i, x in enumerate(t):
-    
-    state = [s[i], x]
+state = ['100Sn 1g7/2', 1]
 
-    # Solver is run
-    B, a0, rvals, FGvals = run_1Dsolve(state, Scenario=2)
-    print(B)
+# Solver is run
+B, a0, rvals, FGvals = run_1Dsolve(state, Scenario=3)
 
-
-#this is a change
 # Print out results and plot wavefunction
-#print("B: ", B, " a0: ", a0)
-#plotWF(rvals, FGvals, state)
+print("B: ", B, " a0: ", a0)
+plotWF(rvals, FGvals, state)
