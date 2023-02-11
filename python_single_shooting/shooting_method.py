@@ -40,14 +40,18 @@ def run_1Dsolve(state, Scenario):
     state, t = state[0], state[1]
     pctrange = np.array(sorted(np.arange(-40, 41, 4), key = abs))/1000
     exp = data[(data.Name == state) & (data.t == t)].Experiment.values[0]
+    
+    samea = True
+    if Scenario == 3:
+        samea = False
 
     for b in range(0,20):
         B0 = exp + b*np.random.randn()/10
-        B, a0, rvals, FGvals  = solve_dirac(p, pfix, pdict, data, mn, mp, state = state, t = t, B0 = B0, Scenario = Scenario, samea = True)    
+        B, a0, rvals, FGvals  = solve_dirac(p, pfix, pdict, data, mn, mp, state = state, t = t, B0 = B0, Scenario = Scenario, samea = samea)    
         if test_converge(B, exp):
             break
         if abs(B) >= 100:
-            B = -100
+            B = 100
             a = 0
             break    
     return B, a0, rvals, FGvals
@@ -86,7 +90,7 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
     else:
         als = params['als']
     if Scenario == 3:
-        kappa_so = params['kappa_so']
+        kappa_so = params['k_so']
     N, Z, A, a0, xmin, xmax, xmatch, a0 = StateData.N.values[0], StateData.Z.values[0], StateData.N.values[0] + StateData.Z.values[0], 314000, StateData.xmin.values[0], StateData.xmax.values[0], StateData.xmatch.values[0], StateData.a0_d.values[0]
     if l == False and k == False:
         l, k, j = spectr(state.split()[1])
