@@ -147,7 +147,7 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
             DgfDa0 = (Gap(da0outgf, inFG) - Gap(outFG, inFG))/(a0*h)
         except FloatingPointError as e:
             print('DgfDa0 ERROR', e)
-            return -100, 0, rvals, FGvals
+            return 100, 0, rvals, FGvals
         for i in range(len(DgfDa0)):
             for j in range(len(DgfDa0[i])):
                 if DgfDa0[i][j] == 0:
@@ -161,7 +161,7 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
         except np.linalg.LinAlgError as e:
             print(e)
             print('Linalg error in main')
-            return -100, 0, rvals, FGvals
+            return 100, 0, rvals, FGvals
         B = New[0][0]
         a0 = float(New[1][0])
         error = np.sqrt(np.linalg.norm(New - Old))
@@ -169,5 +169,5 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
             error = 0
         if B < -100 or B > 100:
             error = 0
-            return -100, 0, rvals, FGvals
+            return 100, 0, rvals, FGvals
     return B, a0, rvals, FGvals
