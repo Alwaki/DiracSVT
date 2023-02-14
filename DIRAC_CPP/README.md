@@ -29,3 +29,4 @@ which will produce a binary executable that can be run as shown above.
 
 ## Notes
 - The C++ version does not support plotting the resulting wavefunction, but instead exports these to a .txt document. This document is formatted as three columns, with each column using a comma and a space as delimiting characters. The columns are radial distance, f-component and g-component, respectively.
+- The cmake version has been set according to what has been tested. However, this does not mean that a lower version will necessarily fail.
