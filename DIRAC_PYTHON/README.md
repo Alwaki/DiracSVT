@@ -1,7 +1,6 @@
 ## Table of contents
 * [Setup](#setup)
 * [Running](#running)
-* [Notes](#notes)
 
 
 ## Setup
@@ -15,13 +14,11 @@ If you already have a specific version which is incompatible, you can force an i
 
 ## Running
 
-Generally, the only file one should need to interact with to run the code is the main.py file. In the file one can select which state to investigate (see data sheet for which ones are available), and then run by
+Generally, the only file one should need to interact with to run the code is the main.py file. In the file one can select which state to investigate (see data sheet for which ones are available), and then run by executing the file from terminal from the scripts directory. An example of passing arguments can be seen below
 
-    python3 main.py
+    python main.py --state "40Ca 1f7/2" --plot False --scenario 2 --particle -1
 
-or alternatively modify the main file to an executable and run it directly.
+The expected output from this example would be B:  -9.76521264734975  a0:  9257096.937828392. If the solver becomes severely numerically unstable, it will return B:  100  a0:  0.
 
-## Notes
-- If the solver diverges, it will return values of B: -100, a0: 0. 
-- The longdouble in shooting_method.py is deprecated in later editions of numpy. Changing this to a float64 will allow the code to run, but will reduce numerical stability and produce slightly different results in cases with tendencies towards divergence.
-- The current file pathing is different between linux and windows, see the load_data function in util.py. For windows it works to use double backslashes, on linux this will work with single forward slashes.
+Note that the arguments regarding selection of particle and state need to match in accordance with the datasheet.
+
