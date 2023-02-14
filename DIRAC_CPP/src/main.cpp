@@ -1,3 +1,13 @@
+/*
+Project:        Shell evolution of the dirac equation
+                
+Authors:        Alexander Kiessling
+                (2022-2023)
+
+Description:    Main interface file of program, initializes data
+                and calls solver routines.
+*/
+
 #include "solver.h"
 #include "util.h"
 

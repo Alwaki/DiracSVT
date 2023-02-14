@@ -1,3 +1,14 @@
+/*
+Project:        Shell evolution of the dirac equation
+                
+Authors:        Alexander Kiessling
+                (2022-2023)
+
+Description:    Contains all solver routine definitions. See header
+				file for more information.
+
+*/
+
 #include "solver.h"
 
 std::pair <double, double> pointSolve(double x, double F, double G, const containers::parameters& params, 

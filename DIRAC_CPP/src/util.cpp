@@ -1,3 +1,15 @@
+/*
+Project:        Shell evolution of the dirac equation
+                
+Authors:        Alexander Kiessling
+                (2022-2023)
+
+Description:    Contains all utility function definitioons such as reading 
+				and loading input and data. See header file for more 
+				information.
+*/
+
+
 #include "util.h"
 
 int read_user_input(std::string type)
