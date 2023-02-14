@@ -49,12 +49,17 @@ def load_data(filename1, filename2):
     """
     try:
         # Windows pathing
-        data = pd.read_excel(os.getcwd()+"\\"+filename1)
-        pardf= pd.read_excel(os.getcwd()+"\\"+filename2)
+        cur_path = os.path.dirname(__file__)
+        new_path = os.path.relpath('..\\data\\', cur_path)
+        data = pd.read_excel(new_path+"\\"+filename1)
+        pardf= pd.read_excel(new_path+"\\"+filename2)
     except:
         # Linux pathing
-        data = pd.read_excel(os.getcwd()+"/"+filename1)
-        pardf= pd.read_excel(os.getcwd()+"/"+filename2)
+        cur_path = os.path.dirname(__file__)
+        new_path = os.path.relpath('../data/', cur_path)
+        data = pd.read_excel(new_path+"/"+filename1)
+        pardf= pd.read_excel(new_path+"/"+filename2)
+        
     data.index = data['Unnamed: 0']
     data.pop('Unnamed: 0')
     p1 = {pardf.columns[x]:pardf[pardf.Scenario == 1].values[0][x] for x in range(1,9)}
