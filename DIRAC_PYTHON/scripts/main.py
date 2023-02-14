@@ -36,6 +36,7 @@ def main():
     )
     parser.add_argument(
             "--plot",
+            default=False,
             help="Boolean for if plotting wavefunction should be enabled"
     )
 
