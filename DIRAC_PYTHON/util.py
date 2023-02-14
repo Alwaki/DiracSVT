@@ -47,8 +47,14 @@ def load_data(filename1, filename2):
     Returns:
         list: parameter data, scenario specific data, mass
     """
-    data = pd.read_excel(os.getcwd()+"\\python_single_shooting\\"+filename1)
-    pardf= pd.read_excel(os.getcwd()+"\\python_single_shooting\\"+filename2)
+    try:
+        # Windows pathing
+        data = pd.read_excel(os.getcwd()+"\\"+filename1)
+        pardf= pd.read_excel(os.getcwd()+"\\"+filename2)
+    except:
+        # Linux pathing
+        data = pd.read_excel(os.getcwd()+"/"+filename1)
+        pardf= pd.read_excel(os.getcwd()+"/"+filename2)
     data.index = data['Unnamed: 0']
     data.pop('Unnamed: 0')
     p1 = {pardf.columns[x]:pardf[pardf.Scenario == 1].values[0][x] for x in range(1,9)}
