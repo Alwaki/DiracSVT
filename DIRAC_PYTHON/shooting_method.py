@@ -45,15 +45,8 @@ def run_1Dsolve(state, Scenario):
     if Scenario == 3:
         samea = False
 
-    for b in range(0,20):
-        B0 = exp + b*np.random.randn()/10
-        B, a0, rvals, FGvals  = solve_dirac(p, pfix, pdict, data, mn, mp, state = state, t = t, B0 = B0, Scenario = Scenario, samea = samea)    
-        if test_converge(B, exp):
-            break
-        if abs(B) >= 100:
-            B = 100
-            a = 0
-            break    
+    B, a0, rvals, FGvals  = solve_dirac(p, pfix, pdict, data, mn, mp, state = state, t = t, B0 = exp, Scenario = Scenario, samea = samea)    
+    
     return B, a0, rvals, FGvals
 
 def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N= False, Z = False, B0 = False, tensorV = 0.0, Scenario = False, samea = False):
@@ -123,7 +116,7 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
     
     error = 1
     iterations = 0
-    while error > 0.0001:
+    while error > 0.0001 and iterations < 40:
         iterations += 1
         if B < 0:
             Foutbc, Goutbc, Finbc, Ginbc = BC(a0, xmin, xmax, l, B, sigmaV0, sigmaR, sigmaa, dV0, dR, da, k, m) #Set boundary conditions for B
