@@ -252,6 +252,11 @@ containers::solutionsBa0 solveDirac(const containers::parameters& params, double
 	double B = B0;
 	double a0 = a0_in;
 
+	if(params.scenario==3)
+	{
+		da = params.als;
+	}
+
 	// Setup solution container structs
 	containers::solutionsFG inSol;
 	containers::solutionsFG outSol;
@@ -320,6 +325,13 @@ containers::solutionsBa0 solveDirac(const containers::parameters& params, double
 
 		iterations++;
 	}
+
+if(abs(B)>100)
+{
+	B = 100;
+	a0 = 0;
+}
+
 convergedSol.B = B;
 convergedSol.a0 = a0;
 
