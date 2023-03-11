@@ -1,14 +1,11 @@
-%% SINGLE SHOOTING FOR NUMERICAL SOLUTION OF DIRAC'S EQUATION
+%% DiracSVT       
 %
+% Authors:          Alexander W. Kiessling, Daniel Karlsson, 
+%                   Yuxin Zhao & Chong Qi
 % 
-% Project:        Shell evolution of the dirac equation
-%                 
-% Authors:        Alexander W. Kiessling
-%                 (2022-2023)
-% 
-% Description:    Main file of program with user specified settings
-% 
+% Date:             2023
 
+% DESCRIPTION: Main file of program with user specified settings
 
 %% SETUP
 
@@ -19,20 +16,40 @@ clc; clear all; close all;
 scenario = 1;
 element_state_index = 1;
 
-% Setup acts to set paths, load data, declare variables and enact user settings.
+% Add setup path
 addpath("include\utility\");
-run("setup");
 
 %% CODE
 
-% Call solver routine for given element and scenario
-[B, a0, rvals, FGvals] = dirac_solver(params, B, a0, k_so, Tensor_V);
+% Solve for all states
+if element_state_index == 0
+    for element_state_index = 1:89
+        
+        % Load data
+        run("setup");
 
-% Print Energy
-sprintf("B: %f, a0: %f", B, a0)
+        % Call solver routine for given element and scenario
+        [B, a0, rvals, FGvals] = dirac_solver(params, B, a0, k_so, Tensor_V);
+        
+        % Print Energy
+        sprintf("%s, B: %f, a0: %f", name, B, a0)
+    end
 
-% Plot wavefunction
-plotWF(rvals, FGvals)
+% Solve for a specific state
+else
+    % Load data
+    run("setup");
+
+    % Call solver routine for given element and scenario
+    [B, a0, rvals, FGvals] = dirac_solver(params, B, a0, k_so, Tensor_V);
+    
+    % Print Energy
+    sprintf("%s, B: %f, a0: %f", name, B, a0)
+
+    % Plot wavefunction
+    plotWF(rvals, FGvals)
+end
+
 
     
 
