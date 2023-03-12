@@ -17,15 +17,8 @@ def main():
     parser = argparse.ArgumentParser(description="Dirac solver")
     parser.add_argument(
             "--state",
-            default='16O 1p1/2',
-            help="The atom and state to investigate, ex: '16O 1p1/2'"
-    )
-    parser.add_argument(
-            "--particle",
-            default=-1,
-            type=int,
-            choices=[1,-1],
-            help="Sets particle type, -1 for neutron, 1 for proton."
+            default='1',
+            help="Integer value from 1 to 89 for specific state, 0 runs all."
     )
     parser.add_argument(
             "--scenario",
@@ -42,17 +35,22 @@ def main():
 
     args = parser.parse_args()
     
-    # Create state
-    state = [args.state, args.particle]
-    
-    # Run solver routine
-    B, a0, rvals, FGvals = run_1Dsolve(state, Scenario=args.scenario)
-    
-    # If plotting enabled, plot wavefunction. Print results regardless.
-    print("B: ", B, " a0: ", a0)
-    if args.plot==True:
-        print(args.plot)
-        plotWF(rvals, FGvals, state)
+    if args.state == 0:
+        for state in range(1,89):
+                # Run solver routine
+                B, a0, rvals, FGvals = run_1Dsolve(state, Scenario=args.scenario)
+                print("B: ", B, " a0: ", a0)  
+                
+                
+    else:
+        # Run solver routine
+        B, a0, rvals, FGvals = run_1Dsolve(args.state, Scenario=args.scenario)
+        
+        # If plotting enabled, plot wavefunction. Print results regardless.
+        print("B: ", B, " a0: ", a0)
+        if args.plot==True:
+                print(args.plot)
+                plotWF(rvals, FGvals, state)
 
     return 0
 
