@@ -41,8 +41,13 @@ std::vector<std::vector<double>> read_csv(std::string filename);
 void saveWF(std::vector<double> rvals, std::vector<double> fvals, std::vector<double> gvals);
 
 /*
-* brief: Convenience function to get user input, load data and collect it in struct 
+* brief: Convenience function to load data and collect it in struct 
 */
 containers::parameters setup();
+
+/*
+* brief: Convenience function to get user input
+*/
+std::pair<int,int> user_selection();
 
 #endif

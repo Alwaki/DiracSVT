@@ -105,16 +105,21 @@ void saveWF(std::vector<double> rvals, std::vector<double> fvals, std::vector<do
     }
 }
 
-containers::parameters setup()
+std::pair<int,int> user_selection()
 {
-    // Allow user to select scenario and state
+	// Allow user to select scenario and state
 	std::cout << "The program requires a scenario and state. These \n";
 	std::cout << "are both integers, and the scenario ranges from 1 to 3 \n";
-	std::cout << "while the state ranges from 1 to 89. \n";
+	std::cout << "while the state ranges from 1 to 89. If all states \n";
+	std::cout << "are to be run, select state 0. \n";
 	std::cout << "\n";
 	int scenario = read_user_input("scenario"); 
 	int state = read_user_input("state");
+	return {scenario, state};
+}
 
+containers::parameters setup(int scenario, int state)
+{
 	// Load data from files
 	auto data = read_csv("data.csv");
 	auto parameters = read_csv("parameters.csv");
