@@ -18,10 +18,10 @@ int main()
 
 	if(selection.second == 0)
 	{
-		for(int i = 1; i < 90; i++)
+		for(int iter = 1; iter < 90; iter++)
 		{
 			// Load data from files
-			containers::parameters params = setup();
+			containers::parameters params = setup(selection.first, iter);
 			
 			// Run dirac solver
 			containers::solutionsBa0 result = solveDirac(params, params.a0, params.B);  
@@ -34,7 +34,7 @@ int main()
 	else
 	{
 		// Load data from files
-		containers::parameters params = setup();
+		containers::parameters params = setup(selection.first, selection.second);
 		
 		// Run dirac solver
 		containers::solutionsBa0 result = solveDirac(params, params.a0, params.B);  

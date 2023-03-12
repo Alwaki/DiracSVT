@@ -227,7 +227,7 @@ containers::solutionsBa0 solveDirac(const containers::parameters& params, double
 	// Iterate solvers
 	double h = 0.0001;
 	int iterations = 0;
-	while (error > 0.0001 && iterations < 50)
+	while (error > 0.0001 && iterations < 100)
 	{
 		double Foutbc, Goutbc, Finbc, Ginbc;
 		if(B <0)

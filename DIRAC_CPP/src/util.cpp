@@ -38,7 +38,7 @@ int read_user_input(std::string type)
 	{
 		while (1)
 		{
-			if (std::cin.fail() || ( temp < 1) || (temp > 89) )
+			if (std::cin.fail() || ( temp < 0) || (temp > 89) )
 			{
 				std::cin.clear();
 				std::cin.ignore(1000, '\n');
