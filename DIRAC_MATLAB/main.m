@@ -1,11 +1,14 @@
-%% DiracSVT       
+% Title:        		DiracSVT
+%                
+% Authors:        		Alexander Kiessling, Daniel Karlsson, 
+%						Yuxin Zhao, Chong Qi
 %
-% Authors:          Alexander W. Kiessling, Daniel Karlsson, 
-%                   Yuxin Zhao & Chong Qi
-% 
-% Date:             2023
-
-% DESCRIPTION: Main file of program with user specified settings
+% Version:				1.0 (03/2023)	
+%
+% Project Description:  Numerical solution of the Dirac equation with scalar,
+%						vector and tensor potentials
+%
+% File Description:		Main file of program with user specified settings
 
 %% SETUP
 
