@@ -15,9 +15,9 @@ A finished binary is included in the lib directory, which (provided user is in /
 
     ./DIRAC_SOLVER
 
-The user is then prompted to select a scenario and a state. These are in accordance with the accompanying data and parameter files, which can be inspected in the lib directory. The code will return the value of the binding energy B, and an auxiliary parameter a0. If the solver diverges, these will be returned as 100 and 0, respectively.
+The user is then prompted to select a scenario and a state. These are in accordance with the accompanying data and parameter files, which can be inspected in the lib directory. If it is desired to run all states at once, then one can set the state as 0 when prompted. The code will return the value of the binding energy B, and an auxiliary parameter a0. If the solver severely diverges, these will be returned as 100 and 0, respectively.
 
-If a full build is desired, cmake files are provided. Assuming user is in the base directory of DIRAC_CPP, then Cmake can be invoked through
+If a full build is desired, cmake files are provided. Assuming user is in the base directory of DIRAC_CPP, then Cmake can be invoked from terminal through
 
     cmake -S . -B lib/
 
@@ -29,4 +29,4 @@ which will produce a binary executable that can be run as shown above.
 
 ## Notes
 - The C++ version does not support plotting the resulting wavefunction, but instead exports these to a .txt document. This document is formatted as three columns, with each column using a comma and a space as delimiting characters. The columns are radial distance, f-component and g-component, respectively.
-- The cmake version has been set according to what has been tested. However, this does not mean that a lower version will necessarily fail.
+- The required cmake version has been set according to the development version used. However, this does not mean that a lower version will necessarily fail.

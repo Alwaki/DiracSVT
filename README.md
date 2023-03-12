@@ -13,4 +13,4 @@ Project is created with:
 * C++17
 	
 ## Setup
-Each folder contains a separate readme file with instructions for what depdencies are required, and running the code. Note that each shooting directory is a standalone package, and can be used separately. 
+Each folder contains a separate readme file with instructions for what depdencies are required, and running the code. Note that each version directory is a standalone package, and can be used separately. 
