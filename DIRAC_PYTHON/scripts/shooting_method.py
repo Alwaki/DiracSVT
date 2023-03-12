@@ -1,12 +1,17 @@
 """
-Project:        Shell evolution of the dirac equation
+Title:        		    DiracSVT
                 
-Authors:        Daniel Karlsson & Alexander Kiessling
-                (2021-2023)
+Authors:        	    Alexander Kiessling, Daniel Karlsson, 
+			            Yuxin Zhao, Chong Qi
 
-Description:    Functionality for shooting method solver,
-                this is the main looping point to call solving methods
-                and handle results.
+Version:		        1.0 (03/2023)	
+
+Project Description:    Numerical solution of the Dirac equation with scalar,
+			            vector and tensor potentials
+
+File Description:	    Functionality for shooting method solver,
+                        this is the main looping point to call solving methods
+                        and handle results.
 """
 
 from util import *

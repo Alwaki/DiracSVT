@@ -1,12 +1,16 @@
 """
-Project:        Shell evolution of the dirac equation
+Title:        		    DiracSVT
                 
-Authors:        Daniel Karlsson & Alexander Kiessling
-                (2021-2023)
+Authors:        	    Alexander Kiessling, Daniel Karlsson, 
+			            Yuxin Zhao, Chong Qi
 
-Description:    Boundary conditions for the radial dirac 
-                equation.
+Version:		        1.0 (03/2023)	
 
+Project Description:    Numerical solution of the Dirac equation with scalar,
+			            vector and tensor potentials
+
+File Description:	    Boundary conditions for the radial dirac 
+                        equation.
 """
 
 import scipy.special as bessel

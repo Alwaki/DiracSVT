@@ -1,13 +1,18 @@
 """
-Project:        Shell evolution of the dirac equation 
+Title:        		    DiracSVT
                 
-Authors:        Daniel Karlsson & Alexander Kiessling
-                (2021-2023)
+Authors:        	    Alexander Kiessling, Daniel Karlsson, 
+			            Yuxin Zhao, Chong Qi
 
-Description:    Numerical methods to solve initial value problem through
-                integration. Methods are decorated with jit handle,
-                which reduces debug value. Remove jit decorator
-                in case of debug.
+Version:		        1.0 (03/2023)	
+
+Project Description:    Numerical solution of the Dirac equation with scalar,
+			            vector and tensor potentials
+
+File Description:	    Numerical methods to solve initial value problem through
+                        integration. Methods are decorated with jit handle,
+                        for pre-compilation (speedup) but which also reduces 
+                        debug value. Remove jit decorator in case of debug.
 """
 
 from numba import jit
