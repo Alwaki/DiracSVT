@@ -37,7 +37,8 @@ def run_1Dsolve(state, Scenario):
         p = list(p3.values())
         
     pdict = {}
-    state, t = state[0], state[1]
+    t = data.t.values[state-1]
+    state = data.Name.values[state-1]
     pctrange = np.array(sorted(np.arange(-40, 41, 4), key = abs))/1000
     exp = data[(data.Name == state) & (data.t == t)].Experiment.values[0]
     
@@ -117,14 +118,6 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
     error = 1
     iterations = 0
     
-    # Check if system allows for 128 precision, otherwise restrict
-    float128_available = 0
-    try:
-        test_var = np.longdouble(1.0)
-        float128_available = 1
-    except:
-        pass
-    
     while error > 0.0001 and iterations < 40:
         iterations += 1
         if B < 0:
@@ -143,10 +136,7 @@ def solve_dirac(p, pfix, pdict, data, mn, mp, state, t, l = False, k = False, N=
         dBinFG, drvals, dFGvals = RK_integrate(xmax, xmatch, Finbc, Ginbc, k, m, B1, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, t)
         dBoutFG, drvals, dFGvals = RK_integrate(xmin, xmatch, Foutbc, Goutbc, k, m, B1, sigmaV0, dV0, sigmaR, dR, sigmaa, da, Z, tensorV, t)
 
-        if float128_available == True:
-            DgfDB = (np.longdouble(Gap(dBoutFG, dBinFG))- np.longdouble(Gap(outFG, inFG)))/(B*h)
-        else:
-            DgfDB = (np.double(Gap(dBoutFG, dBinFG))- np.double(Gap(outFG, inFG)))/(B*h)
+        DgfDB = (np.double(Gap(dBoutFG, dBinFG))- np.double(Gap(outFG, inFG)))/(B*h)
         da0outgf = outFG*(1+h) 
         try:
             DgfDa0 = (Gap(da0outgf, inFG) - Gap(outFG, inFG))/(a0*h)

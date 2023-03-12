@@ -17,7 +17,8 @@ def main():
     parser = argparse.ArgumentParser(description="Dirac solver")
     parser.add_argument(
             "--state",
-            default='1',
+            default=1,
+            type=int,
             help="Integer value from 1 to 89 for specific state, 0 runs all."
     )
     parser.add_argument(
@@ -38,18 +39,17 @@ def main():
     if args.state == 0:
         for state in range(1,89):
                 # Run solver routine
-                B, a0, rvals, FGvals = run_1Dsolve(state, Scenario=args.scenario)
+                B, a0, rvals, FGvals = run_1Dsolve(state, args.scenario)
                 print("B: ", B, " a0: ", a0)  
                 
                 
     else:
         # Run solver routine
-        B, a0, rvals, FGvals = run_1Dsolve(args.state, Scenario=args.scenario)
+        B, a0, rvals, FGvals = run_1Dsolve(args.state, args.scenario)
         
         # If plotting enabled, plot wavefunction. Print results regardless.
         print("B: ", B, " a0: ", a0)
         if args.plot==True:
-                print(args.plot)
                 plotWF(rvals, FGvals, state)
 
     return 0
