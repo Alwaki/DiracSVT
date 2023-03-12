@@ -43,7 +43,7 @@ void saveWF(std::vector<double> rvals, std::vector<double> fvals, std::vector<do
 /*
 * brief: Convenience function to load data and collect it in struct 
 */
-containers::parameters setup();
+containers::parameters setup(int scenario, int state);
 
 /*
 * brief: Convenience function to get user input
