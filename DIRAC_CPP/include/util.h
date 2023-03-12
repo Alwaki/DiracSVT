@@ -1,11 +1,16 @@
 /*
-Project:        Shell evolution of the dirac equation
+Title:        			DiracSVT
                 
-Authors:        Alexander Kiessling
-                (2022-2023)
+Authors:        		Alexander Kiessling, Daniel Karlsson, 
+						Yuxin Zhao, Chong Qi
 
-Description:    Header file for util.cpp. Also serves as 
-                function documentation.
+Version:				1.0 (03/2023)	
+
+Project Description:    Numerical solution of the Dirac equation with scalar,
+						vector and tensor potentials
+
+File Description:		Header file for util.cpp. Also serves as 
+                        function documentation.
 */
 
 

@@ -1,11 +1,16 @@
 /*
-Project:        Shell evolution of the dirac equation
+Title:        			DiracSVT
                 
-Authors:        Alexander Kiessling
-                (2022-2023)
+Authors:        		Alexander Kiessling, Daniel Karlsson, 
+						Yuxin Zhao, Chong Qi
 
-Description:    Header file for solver.cpp. Also serves as 
-				function documentation.
+Version:				1.0 (03/2023)	
+
+Project Description:    Numerical solution of the Dirac equation with scalar,
+						vector and tensor potentials
+
+File Description:		Header file for solver.cpp. Also serves as 
+						function documentation.
 */
 
 
@@ -71,7 +76,7 @@ std::pair <double, double> pointSolve(double x, double F, double G, const contai
 										double dR, double da);
 
 /*
-* brief: Calls pointSolve repeatedly to integrate along many points
+* brief: Calls pointSolve repeatedly to integrate along many points with RK4 scheme
 */
 std::pair <double, double> IntegrateRK4(double iniF, double iniG, const containers::parameters& params, 
 											double B, double a0, double sigmaV0, double sigmaR, double sigmaa, 
