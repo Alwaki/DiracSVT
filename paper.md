@@ -27,10 +27,23 @@ bibliography: paper.bib
 ---
 
 # Summary
-The solving of the Dirac equation has played a very important role in many
-areas of fundamental physics. In this work we present the Dirac equation
-solver, DiracSVT, which solve the Dirac equation with Scalar, Vector as well
-as Tensor nuclear potentials in the spherical coordinate space. The shooting
+The Dirac equation is the fundamental relativistic wave equation in quantum mechanics that describes the behavior of spin-1/2 massive particles. It
+is the generalization of the Schrodinger equation to account for relativistic
+effects. The solving of Dirac equations with various potentials have played a
+very important role in many areas of fundamental physics including atomic,
+nuclear, hadron and molecular systems. One of the most important aspects of contemporary nuclear
+physics is the study of the shell evolution of exotic nuclei, which refers to
+the potentially dramatic changes in the shell structure as one approaches the
+driplines with excessive protons or neutrons [6]. The evolution of the shell
+structure, which is crucial for our understanding of nuclear stability as well
+as the origin of heavy elements, can be induced by the isospin dependence
+of the spin-orbital as well as tensor potentials in various mean field model
+approaches. The Dirac equation is unique for such study since it provides
+not only insight on the origin of spin-orbital potentials as a the competition
+of scalar and vector potentials [1] but also the possibility to add a tensor potential at the mean field level. 
+
+This software focuses on numerically solving the
+Dirac equation with scalar, vector as well as tensor potentials in the spherical coordinate space. The shooting
 method is utilized with a Runge-Kutta 4 integration scheme. The potentials
 are parameterized in a Woods-Saxon form, which reproduce well the known
 single-particle states around all doubly-magic nuclei and can be applied to
@@ -40,7 +53,9 @@ to study other systems including atomic, hadron and molecular physics.
 The code solves the Dirac equation in the spherical
 coordinate space utilizing the shooting method with a Runge-Kutta 4 inte-
 gration scheme. The code is prepared in three different languages, namely 
-Python, C++ and Matlab. Data is provided to readily study the available single-particle
+Python, C++ and Matlab. The Python version relies heavily on the scientific python stack (e.g. numpy
+(van der Walt, Colbert, & Varoquaux, 2011), scipy (Jones, Oliphant, Peterson, & others,
+n.d.), matplotlib (Hunter, 2007) and pandas (McKinney, 2010)). Data is provided for all three languages to readily study the available single-particle
 states around doubly-magic nuclei that include 16O, 40Ca, 48Ca, 56Ni, 100Sn,
 132Cs and 208Pb. The same potentials can also reproduce well the shell struc-
 ture of many open nuclei over the whole nuclear chart.
@@ -80,15 +95,7 @@ The corresponding Dirac equation for the radial wave function can be expressed a
 $$\begin{eqnarray}\left(\frac{d}{d r}+\frac{\kappa}{r}-U(r)\right) g_{\kappa}(r)=(E+m-\Delta(r)) f_{\kappa}(r) \\ \left(\frac{d}{d r}-\frac{\kappa}{r}+U(r)\right) f_{\kappa}(r)=-(E-m-\Sigma(r)) g_{\kappa}(r)\end{eqnarray}$$
 
 where $f$ and $g$ are the two components of the radial wave function and $\kappa=-(l+1)$ for $j=l+\frac{1}{2}$ and $\kappa=l$ for $j=l-\frac{1}{2}$.
-As a matter of convenience, we have defined our potentials as $\Sigma = V + S$ and $\Delta = V - S$ as sum of the vector and scalar potentials. The above equations can also be rewritten as
-
-$$\begin{eqnarray}
-g'_{\kappa} = (2m + B - \Delta)f_{\kappa} + \left(U-\frac{\kappa}{r}\right)g_{\kappa} \\
-f'_{\kappa} = (-B + \Sigma)g_{\kappa} + \left(\frac{\kappa}{r} - U\right)f_{\kappa} 
-\end{eqnarray}$$
-
-where the binding energy B is taken from the total energy $E = B + m.$
-
+As a matter of convenience, we have defined our potentials as $\Sigma = V + S$ and $\Delta = V - S$ as sum of the vector and scalar potentials. Note that the binding energy B is taken from the total energy $E = B + m.$
 
 The potentials can be parameterized in a standard Woods-Saxon shape (see, e.g., \cite{XU2013247,kennedy2002woods})
 
@@ -149,7 +156,7 @@ $$\begin{equation}
 
 The boundary condition for bound states is defined separately for cases with small and large radii. For small $r$, we have
 
-$$\begin{eqnarray} \label{boun1}
+$$\begin{eqnarray} 
 f = 
 \begin{cases}
 	-a_0\left(\frac{-B+\Sigma}{k}\right) \epsilon^{l+2} \qquad k < 0 \\
@@ -176,7 +183,7 @@ Where $j$ and $y$ indicate the spherical Bessel functions, $l' = j\pm \frac{1}{2
 
 $$\begin{align} 
 &f = C j_l(r) + D y_l(r),\\
-&g = \frac{\sqrt{B^2 + 2Bm}}{B+2m} [C j_{l'}(r) + D y_{l'}(r)]. \label{boun2}
+&g = \frac{\sqrt{B^2 + 2Bm}}{B+2m} [C j_{l'}(r) + D y_{l'}(r)]. 
 \end{align}$$
 
 # Citations
@@ -193,18 +200,12 @@ For a quick reference, the following citation commands can be used:
 - `[@author:2001]` -> "(Author et al., 2001)"
 - `[@author1:2001; @author2:2001]` -> "(Author1 et al., 2001; Author2 et al., 2002)"
 
-# Figures
 
-Figures can be included like this:
-![Caption for example figure.\label{fig:example}](figure.png)
-and referenced from text using \autoref{fig:example}.
-
-Figure sizes can be customized by adding an optional second parameter:
-![Caption for example figure.](figure.png){ width=20% }
-
-# Acknowledgements
-
-We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.
 
 # References
+
+Hunter, J. D. (2007). Matplotlib: A 2D graphics environment. Computing in Science &
+Engineering, 9(3), 90–95. doi:10.1109/MCSE.2007.55
+
+Jones, E., Oliphant, T., Peterson, P., & others. (n.d.). SciPy: Open source scientific tools
+for Python. Retrieved from http://www.scipy.org/
