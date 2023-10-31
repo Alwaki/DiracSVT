@@ -79,12 +79,12 @@ The corresponding Dirac equation for the radial wave function can be expressed a
 
 $$\begin{eqnarray}\left(\frac{d}{d r}+\frac{\kappa}{r}-U(r)\right) g_{\kappa}(r)=(E+m-\Delta(r)) f_{\kappa}(r) \\ \left(\frac{d}{d r}-\frac{\kappa}{r}+U(r)\right) f_{\kappa}(r)=-(E-m-\Sigma(r)) g_{\kappa}(r)\end{eqnarray}$$
 
-where $f$ and $g$ are the two components of the radial wave function and $\kappa=-(l+1)$ for $ j=l+\frac{1}{2}$ and $\kappa=l$ for $ j=l-\frac{1}{2}$.
+where $f$ and $g$ are the two components of the radial wave function and $\kappa=-(l+1)$ for $j=l+\frac{1}{2}$ and $\kappa=l$ for $j=l-\frac{1}{2}$.
 As a matter of convenience, we have defined our potentials as $\Sigma = V + S$ and $\Delta = V - S$ as sum of the vector and scalar potentials. The above equations can also be rewritten as
 
 $$\begin{eqnarray}
-&	g'_{\kappa} = (2m + B - \Delta)f_{\kappa} + \left(U-\frac{\kappa}{r}\right)g_{\kappa} \\
-&	f'_{\kappa} = (-B + \Sigma)g_{\kappa} + \left(\frac{\kappa}{r} - U\right)f_{\kappa} 
+g'_{\kappa} = (2m + B - \Delta)f_{\kappa} + \left(U-\frac{\kappa}{r}\right)g_{\kappa} \\
+f'_{\kappa} = (-B + \Sigma)g_{\kappa} + \left(\frac{\kappa}{r} - U\right)f_{\kappa} 
 \end{eqnarray}$$
 
 where the binding energy B is taken from the total energy $E = B + m.$
@@ -133,7 +133,7 @@ The coulomb barrier is defined as:
 $$\begin{equation}
 V_\mathrm{Coulomb} = 
 \begin{cases}
-	c \frac{Z}{r} \qquad \qquad \;\;\;  r > r_{\sigma} \qquad \qquad \\
+	c \frac{Z}{r} \qquad \qquad  r > r_{\sigma} \qquad \qquad \\
 	c \frac{Z (3r_{\sigma}^2 - r^2)}{2r_{\sigma}^3} \qquad r \leq r_{\sigma},
 \end{cases}
 \end{equation}$$
@@ -153,12 +153,12 @@ $$\begin{eqnarray} \label{boun1}
 f = 
 \begin{cases}
 	-a_0\left(\frac{-B+\Sigma}{k}\right) \epsilon^{l+2} \qquad k < 0 \\
-	a_0\epsilon^{l}  \qquad \qquad \qquad \quad \; k > 0 
+	a_0\epsilon^{l}  \qquad \qquad \qquad \quad  k > 0 
 \end{cases}\\
 g = 
 \begin{cases}
-	a_0 \epsilon^{l+1} \qquad \qquad \qquad \; k < 0   \\
-	a_0\left(\frac{2m + B -\Delta}{k}\right) \epsilon^{l+1} \quad \;\;\;  k > 0.
+	a_0 \epsilon^{l+1} \qquad \qquad \qquad  k < 0   \\
+	a_0\left(\frac{2m + B -\Delta}{k}\right) \epsilon^{l+1} \quad  k > 0.
 \end{cases}
 \end{eqnarray}$$
 
@@ -166,15 +166,13 @@ Both wave functions approach zero as the radius goes to infinity.
 
 To handle unbound resonance states with positive energy, we implement for  large $r$ similar boundary conditions to Eq. (26) as in \cite{alonso1997boundary}:
 
-$$\[
-\psi = 
+$$\psi = 
 \begin{pmatrix}
 	[C j_lkr) + D y_l(r)]Y_{j,l,j_z} \\
 	\frac{\sqrt{B^2 + 2Bm}}{B+2m} [C j_{l'}(r) + D y_{l'}(r)]Y_{j,l',j_z}
-\end{pmatrix}
-\]$$
+\end{pmatrix}$$
 
-Where $j$ and $y$ indicate the spherical Bessel functions, $l' = j\pm \frac{1}{2}$ and $\quad j_z = -j, -j+1, \dots j.$ Here, $Y_{j,l,jz}$ are the spinor spherical harmonics as detailed in \cite{varshalovich1988quantum}. In the 1D case, one of the two components of the spinor spherical harmonics vanish and the solution is reduced to the two components f and g. As such the condition becomes
+Where $j$ and $y$ indicate the spherical Bessel functions, $l' = j\pm \frac{1}{2}$ and $j_z = -j, -j+1, \dots j.$ Here, $Y_{j,l,jz}$ are the spinor spherical harmonics as detailed in \cite{varshalovich1988quantum}. In the 1D case, one of the two components of the spinor spherical harmonics vanish and the solution is reduced to the two components f and g. As such the condition becomes
 
 $$\begin{align} 
 &f = C j_l(r) + D y_l(r),\\
