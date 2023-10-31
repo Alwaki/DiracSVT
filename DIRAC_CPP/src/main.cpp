@@ -4,7 +4,7 @@ Title:        			DiracSVT
 Authors:        		Alexander Kiessling, Daniel Karlsson, 
 						Yuxin Zhao, Chong Qi
 
-Version:				1.0 (03/2023)	
+Version:				1.1 (11/2023)	
 
 Project Description:    Numerical solution of the Dirac equation with scalar,
 						vector and tensor potentials
