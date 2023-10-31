@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25.2)
+cmake_minimum_required(VERSION 3.16.2)
 
 project(DIRAC_SOLVER
 	VERSION 1.0.0
