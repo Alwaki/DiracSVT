@@ -40,11 +40,9 @@ to study other systems including atomic, hadron and molecular physics.
 The code solves the Dirac equation in the spherical
 coordinate space utilizing the shooting method with a Runge-Kutta 4 inte-
 gration scheme. The code is prepared in three different languages, namely 
-Python, C++ and Matlab.
-
-The code is used to solve the available single-particle
+Python, C++ and Matlab. Data is provided to readily study the available single-particle
 states around doubly-magic nuclei that include 16O, 40Ca, 48Ca, 56Ni, 100Sn,
-132Cs and 208Pb. The same potential can also reproduce well the shell struc-
+132Cs and 208Pb. The same potentials can also reproduce well the shell struc-
 ture of many open nuclei over the whole nuclear chart.
 
 # Statement of need
@@ -71,10 +69,12 @@ scientific explorations of forthcoming data releases from the *Gaia* mission
 
 # Mathematics
 
-We limit ourselves to spherical symmetry. The Dirac Hamiltonian \(H\) with a scalar potential \(S\), a vector potential \(V\) and a tensor potential \(U\) can be given by (see, e.g., \cite{pot,pot2})
+We limit ourselves to spherical symmetry. The Dirac Hamiltonian \(H\) with a scalar potential \(S\), a vector potential \(V\) and a tensor potential \(U\) can be given by (see, e.g., SOURCE)
+$$
 \begin{equation}
    H=\vec{\alpha} \cdot \vec{p}+\beta(m+S)+V-i \beta \vec{\alpha} \cdot \hat{r} U.
 \end{equation}
+$$
 The corresponding Dirac equation for the radial wave function can be expressed as
 \begin{eqnarray}\left(\frac{d}{d r}+\frac{\kappa}{r}-U(r)\right) g_{\kappa}(r)=(E+m-\Delta(r)) f_{\kappa}(r) \\ \left(\frac{d}{d r}-\frac{\kappa}{r}+U(r)\right) f_{\kappa}(r)=-(E-m-\Sigma(r)) g_{\kappa}(r)\end{eqnarray}
 where $f$ and $g$ are the two components of the radial wave function and $\kappa=-(l+1)$ for $ j=l+\frac{1}{2}$ and $\kappa=l$ for $ j=l-\frac{1}{2}$.
