@@ -4,13 +4,13 @@
 
 
 ## Setup
-This version makes use of several python libraries. These can be installed as a batch using pip3 (or use pip), following
+This version makes use of several python libraries. These can be installed as a batch using pip, following
 
-    pip3 install scipy pandas numba numpy==1.20.3 openpyxl
+    pip install scipy matplotlib pandas numba numpy==1.20.3 openpyxl
 
 If you already have a specific version which is incompatible, you can force an install of a specific version as follows:
     
-    pip3 install --force-reinstall numpy==1.20.3
+    pip install --force-reinstall numpy==1.20.3
 
 ## Running
 
