@@ -70,11 +70,9 @@ scientific explorations of forthcoming data releases from the *Gaia* mission
 # Mathematics
 
 We limit ourselves to spherical symmetry. The Dirac Hamiltonian \(H\) with a scalar potential \(S\), a vector potential \(V\) and a tensor potential \(U\) can be given by (see, e.g., SOURCE)
-$$
-\begin{equation}
+$$\begin{equation}
    H=\vec{\alpha} \cdot \vec{p}+\beta(m+S)+V-i \beta \vec{\alpha} \cdot \hat{r} U.
-\end{equation}
-$$
+\end{equation}$$
 The corresponding Dirac equation for the radial wave function can be expressed as
 \begin{eqnarray}\left(\frac{d}{d r}+\frac{\kappa}{r}-U(r)\right) g_{\kappa}(r)=(E+m-\Delta(r)) f_{\kappa}(r) \\ \left(\frac{d}{d r}-\frac{\kappa}{r}+U(r)\right) f_{\kappa}(r)=-(E-m-\Sigma(r)) g_{\kappa}(r)\end{eqnarray}
 where $f$ and $g$ are the two components of the radial wave function and $\kappa=-(l+1)$ for $ j=l+\frac{1}{2}$ and $\kappa=l$ for $ j=l-\frac{1}{2}$.
