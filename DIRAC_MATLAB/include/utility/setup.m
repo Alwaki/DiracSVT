@@ -26,6 +26,7 @@ k_so = parameters{scenario,9};
 Tensor_V = parameters{scenario,10};
 
 % Read element parameters from table
+name = char(data{element_state_index, "Name"});
 isospin = data{element_state_index, 3};
 N = data{element_state_index, 4};
 Z = data{element_state_index, 5};
