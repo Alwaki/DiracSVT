@@ -4,7 +4,7 @@ Title:        		    DiracSVT
 Authors:        	    Alexander Kiessling, Daniel Karlsson, 
 			            Yuxin Zhao, Chong Qi
 
-Version:		        1.0 (03/2023)	
+Version:		        1.1 (11/2023)	
 
 Project Description:    Numerical solution of the Dirac equation with scalar,
 			            vector and tensor potentials
@@ -102,20 +102,19 @@ def test_converge(B, Exp):
     """
     return math.isclose(B, Exp, rel_tol=0.1)
 
-def plotWF(rvals, FGvals, state):
+def plotWF(rvals, FGvals):
     """ Plots wavefunction
 
     Args:
         rvals ([float]): radial component
         FGvals ([float]): split wavefunction (two component solution)
-        state ([tuple]): tuple containing string and integer. String is used as title.
     """
     x, y = zip(*sorted(zip(rvals,FGvals[0])))
     plt.plot(x, y, c = 'r', label = 'f')
     x, y = zip(*sorted(zip(rvals,FGvals[1])))
     plt.plot(x, y, c = 'b', label = 'g')
     plt.legend()
-    plt.title(state[0])
+    plt.title("Solution")
     plt.xlabel('r')
     plt.ylabel('Wavefunction')
     plt.show()
