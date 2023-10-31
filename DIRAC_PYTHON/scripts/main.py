@@ -6,7 +6,7 @@ Title:        		DiracSVT
 Authors:        	Alexander Kiessling, Daniel Karlsson, 
 			Yuxin Zhao, Chong Qi
 
-Version:		1.0 (03/2023)	
+Version:		1.1 (11/2023)	
 
 Project Description:    Numerical solution of the Dirac equation with scalar,
 			vector and tensor potentials
@@ -33,11 +33,6 @@ def main():
             choices=[1,2,3],
             help="Integer value from 1 to 3, specifies parameters and potential"
     )
-    parser.add_argument(
-            "--plot",
-            default=False,
-            help="Boolean for if plotting wavefunction should be enabled"
-    )
 
     args = parser.parse_args()
     
@@ -54,8 +49,8 @@ def main():
         
         # If plotting enabled, plot wavefunction. Print results regardless.
         print("B: ", B, " a0: ", a0)
-        if args.plot==True:
-                plotWF(rvals, FGvals, state)
+        plotWF(rvals, FGvals)
+
 
     return 0
 
