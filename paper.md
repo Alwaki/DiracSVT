@@ -156,7 +156,7 @@ $$\psi =
 	\frac{\sqrt{B^2 + 2Bm}}{B+2m} [C j_{l'}(r) + D y_{l'}(r)]Y_{j,l',j_z}
 \end{pmatrix}$$
 
-Where $j$ and $y$ indicate the spherical Bessel functions, $l' = j\pm \frac{1}{2}$ and $j_z = -j, -j+1, \dots j.$ Here, $Y_{j,l,jz}$ are the spinor spherical harmonics as detailed in \cite{varshalovich1988quantum}. In the 1D case, one of the two components of the spinor spherical harmonics vanish and the solution is reduced to the two components f and g. As such the condition becomes
+Where $j$ and $y$ indicate the spherical Bessel functions, $l' = j\pm \frac{1}{2}$ and $j_z = -j, -j+1, \dots j.$ Here, $Y_{j,l,jz}$ are the spinor spherical harmonics as detailed in (Varshalovich, 1988). In the 1D case, one of the two components of the spinor spherical harmonics vanish and the solution is reduced to the two components f and g. As such the condition becomes
 
 $$\begin{align} 
 &f = C j_l(r) + D y_l(r),\\
