@@ -8,13 +8,14 @@ tags:
 authors:
   - name: Alexander Wallén Kiessling
     orcid: 0009-0008-5433-1258
-    affiliation: 1 # (Multiple affiliations must be quoted)
+    affiliation: "1" 
   - name: Daniel Karlsson
-    affiliation: 1
+    affiliation: "1"
   - name: Yuxin Zhao
-    affiliation: 2
+    affiliation: "2"
   - name: Chong Qi
-    affiliation: 1
+    orcid: 0000-0002-1406-5695
+    affiliation: "1"
     
 affiliations:
  - name: Department of Physics, KTH Royal Institute of Technology, Sweden
@@ -27,37 +28,13 @@ bibliography: paper.bib
 ---
 
 # Summary
-The Dirac equation is the fundamental relativistic wave equation in quantum mechanics that describes the behavior of spin-1/2 massive particles. It
-is the generalization of the Schrodinger equation to account for relativistic
-effects. The solving of Dirac equations with various potentials have played a
-very important role in many areas of fundamental physics including atomic,
-nuclear, hadron and molecular systems. One of the most important aspects of contemporary nuclear
-physics is the study of the shell evolution of exotic nuclei, which refers to
-the potentially dramatic changes in the shell structure as one approaches the
-driplines with excessive protons or neutrons (Otsuka & others, 2020). The evolution of the shell
-structure, which is crucial for our understanding of nuclear stability as well
-as the origin of heavy elements, can be induced by the isospin dependence
-of the spin-orbital as well as tensor potentials in various mean field model
-approaches. 
-
-This software focuses on numerically solving the
-Dirac equation with scalar, vector as well as tensor potentials in the spherical coordinate space. The shooting
-method is utilized with a Runge-Kutta 4 integration scheme, building on methods introduced by (Silbar & Goldman, 2010). The potentials
-are parameterized in a Woods-Saxon form, which reproduce well the known
-single-particle states around all doubly-magic nuclei and can be applied to
-study the shell evolution of exotic nuclei. The code can be easily extended
-to study other systems including atomic, hadron and molecular physics.
-
-The code solves the Dirac equation in the spherical
-coordinate space utilizing the shooting method with a Runge-Kutta 4 inte-
-gration scheme. The code is prepared in three different languages, namely 
-Python, C++ and Matlab. Data is provided for all three languages to readily study the available single-particle
-states around doubly-magic nuclei that include 16O, 40Ca, 48Ca, 56Ni, 100Sn,
-132Cs and 208Pb. The same potentials can also reproduce well the shell struc-
-ture of many open nuclei over the whole nuclear chart.
+The Dirac equation is the fundamental relativistic wave equation in quantum mechanics that describes the behavior of spin-1/2 massive particles. It is the generalization of the Schrodinger equation to account for relativistic effects. The solving of Dirac equations with various potentials have played a very important role in many areas of fundamental physics including atomic, nuclear, hadron and molecular systems. The software DiracSVT focuses on numerically solving the Dirac equation with Scalar, Vector as well as Tensor potentials in the spherical coordinate space. The shooting method is utilized with a Runge-Kutta 4 integration scheme. A Universal Vector+Scalar potential parameterized in a Woods-Saxon form is provided, which reproduces well the known single-particle states around all doubly-magic nuclei and enables us to study the effect of Tensor potential on the shell evolution of exotic nuclei. The code is prepared in three different languages, namely Python, C++ and Matlab. The code can be easily extended to study other systems including atomic, hadron and molecular physics.
 
 # Statement of need
-
+DiracSVT solves the Dirac equation in the spherical coordinate space considering all Scalar, Vector as well as Tensor potentials. There is no such open source code available as far as we know. Previous works on solving the Dirac equation focus in
+particular on the vector potential and have utilized various integration schemes. We consider in this code in particular the application to nuclear physics.  One of the most important aspects of contemporary nuclear physics is the study of the shell evolution of exotic nuclei, which refers to the potentially dramatic changes in the shell structure as one approaches the driplines with excessive protons or neutrons (Otsuka & others, 2020). The evolution of the shell structure, which is crucial for our understanding of nuclear stability as well as the origin of heavy elements, can be induced by the isospin dependence of the spin-orbital in various nonrelativistic mean field model approaches. The Dirac equation provides not only  a more fundamental understanding of the spin-orbit interaction and nuclear shell structure in terms of vector and scalar potentials but also provides a unique possibility to study the effect of tensor potential. The shell structure is often studied with various density functional approaches with effective nucleon-nucleon interactions. We believe the present code provides a much simpler way to study those effects and possibly at a much higher precison for the single-particle spectroscopy. It also enables us to study systematically the evolution of the pseudospin symmetry in atomic nuclei.
+We hope it can be a useful tool in studying the structure of exotic nuclei as well as other
+quantum systems where the spin-orbit and tensor effects can be important.
 
 # Mathematics
 
@@ -79,50 +56,22 @@ The potentials can be parameterized in a standard Woods-Saxon shape (see (Kenned
 $$\begin{eqnarray}
  \Sigma = \frac{\Sigma_{0,n(p)}}{1+e^{\frac{r - R_{\sigma}}{a_{\sigma}}}} + V_{\mathrm{Coulomb}}\\
  \Delta = \frac{\Delta_{0,n(p)}}{1+e^{\frac{r - R_{\delta}}{a_{\delta}}}} + V_{\mathrm{Coulomb}},\end{eqnarray}$$
- 
+ \end{equation}$$
+
 where $R$ and $a$ are the radius and diffuseness parameters.
 
 The quantities $\Sigma_{0,n(p)},$ and $\Delta_{0,n(p)}$ are defined as follows for three different scenarios (for details see (Xu & Qi, 2013), where $n$ and $p$ stand for neutron and proton states respectively.
-
-$$\begin{eqnarray}
-\Sigma_{0,p} = V_0\left(1+\delta\frac{N-Z}{A}\right) \\
-\Sigma_{0,n} = V_0\left(1-\delta\frac{N-Z}{A}\right)
-\end{eqnarray}$$
-
-Scenario 1:
-
-$$\begin{eqnarray}
-\Delta_0 = -\lambda \Sigma_0
-\end{eqnarray}$$
-
-Scenario 2:
-
-$$\begin{eqnarray}
-\Delta_{0,p} = -\lambda V_0\left(1-\delta\frac{N-Z}{A}\right) \\
-\Delta_{0,n} = -\lambda V_0\left(1+\delta\frac{N-Z}{A}\right) 
-\end{eqnarray}$$
-
-Scenario 3:
-
-$$\begin{eqnarray}
-\Delta_{0,p} = -\lambda V_0\left(1-\delta_{so}\frac{N-Z}{A}\right) \\
-\Delta_{0,n} = -\lambda V_0\left(1+\delta_{so}\frac{N-Z}{A}\right) 
-\end{eqnarray}$$
-
-
-The parameters $V_0, \delta, \delta_{so}, \lambda, a_{\sigma} = a_\delta, r_0,$ and $r_{0,ls}$ are fitted to data for the three scenarios separately. In our simplest case the diffuseness parameters  $a_{\sigma}$, $a_\delta$ are taken to be identical.
-
 The coulomb barrier is defined as:
 
 $$\begin{equation}
 V_\mathrm{Coulomb} = 
 \begin{cases}
-	c \frac{Z}{r} \qquad \qquad  r > r_{\sigma} \qquad \qquad \\
-	c \frac{Z (3r_{\sigma}^2 - r^2)}{2r_{\sigma}^3} \qquad r \leq r_{\sigma},
+	\alpha \frac{Z}{r} \qquad \qquad  r > r_{\sigma} \qquad \qquad \\
+	\alpha \frac{Z (3r_{\sigma}^2 - r^2)}{2r_{\sigma}^3} \qquad r \leq r_{\sigma},
 \end{cases}
 \end{equation}$$
 
-where $c = 0.0072923$.
+where $\alpha$ is the fine structure constant.
 
 In addition we have the tensor potential defined similarly in a Woods-Saxon shape: 
 
@@ -162,6 +111,13 @@ $$\begin{align}
 &f = C j_l(r) + D y_l(r),\\
 &g = \frac{\sqrt{B^2 + 2Bm}}{B+2m} [C j_{l'}(r) + D y_{l'}(r)]. 
 \end{align}$$
+
+We attempt to conjoin an inner solution and an outer solution together, in
+what is known as the shooting method (Silbar & Goldman, 2010). In our case, we employ shooting in two directions, both outward and
+inward. We make use of the Runge-Kutta 4 integration scheme as an ordinary
+differential equation solver. The outwards shooting solution starts from the origin. The inwards shooting originates from an asymptotic distance with the boundary conditions as described above.
+
+With the code and parameterization of the potential as prodived, one is ready to do a systematic calculation on the shell evolution over the whole nuclear chart.
 
 # References
 H. Akcay, Dirac equation with scalar and vector quadratic potentials and
